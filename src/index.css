@@ -76,6 +76,37 @@ body,
   }
 }
 
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(3vh) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes panel-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .anim-fade-in {
   animation: fade-in 1.2s ease-out both;
 }
@@ -93,8 +124,28 @@ body,
   animation: line-in 1.1s cubic-bezier(0.76, 0, 0.24, 1) 1200ms both;
 }
 
+.anim-panel {
+  animation: panel-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-panel-backdrop {
+  animation: panel-backdrop-in 0.45s ease-out both;
+}
+
+.anim-stagger {
+  animation: stagger-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .marquee {
   animation: marquee 30s linear infinite;
+}
+
+.marquee-photos {
+  animation: marquee 50s linear infinite;
+}
+
+.marquee-photos:hover {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -106,7 +157,11 @@ body,
   .anim-rise-in,
   .anim-fade-up,
   .anim-line,
-  .marquee {
+  .anim-panel,
+  .anim-panel-backdrop,
+  .anim-stagger,
+  .marquee,
+  .marquee-photos {
     animation-duration: 0.01ms !important;
     animation-delay: 0ms !important;
   }

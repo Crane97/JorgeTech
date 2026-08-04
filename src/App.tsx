@@ -1,8 +1,11 @@
 import { useEffect, useState, type FormEvent, type ReactNode, type SVGProps } from 'react'
-import { ArrowUpRight, Mail, X } from 'lucide-react'
+import { ArrowUpRight, ChevronLeft, ChevronRight, Mail, X } from 'lucide-react'
 import { LOCALES, translations, type Locale, type Translation } from './i18n'
 import { getZumexHowItWorks } from './content/zumexHowItWorks'
 import { getPorra2026Details } from './content/porra2026Details'
+import { getPorra2022Details } from './content/porra2022Details'
+import { getCoworkingDetails } from './content/coworkingDetails'
+import { getSumeroDetails } from './content/sumeroDetails'
 import zumexScrapingImage from './assets/scraping/3493f21e-c223-4bab-b5bf-15128c4e64e6.png'
 
 const BG_IMAGE =
@@ -23,6 +26,30 @@ const porraImageModules = import.meta.glob<{ default: string }>(
 const PORRA_IMAGES = Object.keys(porraImageModules)
   .sort()
   .map((key) => porraImageModules[key].default)
+
+const porra2022ImageModules = import.meta.glob<{ default: string }>(
+  './assets/porra2022/*.{jpeg,jpg,png,webp}',
+  { eager: true },
+)
+const PORRA_2022_IMAGES = Object.keys(porra2022ImageModules)
+  .sort()
+  .map((key) => porra2022ImageModules[key].default)
+
+const coworkingImageModules = import.meta.glob<{ default: string }>(
+  './assets/coworking/*.{jpeg,jpg,png,webp}',
+  { eager: true },
+)
+const COWORKING_IMAGES = Object.keys(coworkingImageModules)
+  .sort()
+  .map((key) => coworkingImageModules[key].default)
+
+const sumeroImageModules = import.meta.glob<{ default: string }>(
+  './assets/sumeros/*.{jpeg,jpg,png,webp}',
+  { eager: true },
+)
+const SUMERO_IMAGES = Object.keys(sumeroImageModules)
+  .sort()
+  .map((key) => sumeroImageModules[key].default)
 
 type BrandIconProps = SVGProps<SVGSVGElement> & { size?: number }
 
@@ -185,14 +212,98 @@ function OverlayPanel({
   )
 }
 
+function ProjectImageLightbox({
+  images,
+  index,
+  alt,
+  closeLabel,
+  previousLabel,
+  nextLabel,
+  onClose,
+  onIndexChange,
+}: {
+  images: string[]
+  index: number
+  alt: string
+  closeLabel: string
+  previousLabel: string
+  nextLabel: string
+  onClose: () => void
+  onIndexChange: (index: number) => void
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') {
+        onIndexChange((index - 1 + images.length) % images.length)
+      }
+      if (e.key === 'ArrowRight') {
+        onIndexChange((index + 1) % images.length)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [images.length, index, onClose, onIndexChange])
+
+  return (
+    <div className="fixed inset-0 z-[80]" role="dialog" aria-modal="true">
+      <button
+        type="button"
+        aria-label={closeLabel}
+        className="absolute inset-0 bg-black/85 backdrop-blur-sm anim-panel-backdrop"
+        onClick={onClose}
+      />
+      <button
+        type="button"
+        aria-label={closeLabel}
+        onClick={onClose}
+        className="absolute right-5 top-5 z-10 text-cream transition-opacity duration-300 hover:opacity-60 sm:right-8 sm:top-8"
+      >
+        <X size={30} strokeWidth={1.5} />
+      </button>
+      {images.length > 1 ? (
+        <>
+          <button
+            type="button"
+            aria-label={previousLabel}
+            onClick={() =>
+              onIndexChange((index - 1 + images.length) % images.length)
+            }
+            className="absolute left-3 top-1/2 z-10 -translate-y-1/2 text-cream transition-opacity duration-300 hover:opacity-60 sm:left-6"
+          >
+            <ChevronLeft size={36} strokeWidth={1.5} />
+          </button>
+          <button
+            type="button"
+            aria-label={nextLabel}
+            onClick={() => onIndexChange((index + 1) % images.length)}
+            className="absolute right-3 top-1/2 z-10 -translate-y-1/2 text-cream transition-opacity duration-300 hover:opacity-60 sm:right-6"
+          >
+            <ChevronRight size={36} strokeWidth={1.5} />
+          </button>
+        </>
+      ) : null}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-10 sm:p-16 anim-panel">
+        <img
+          src={images[index]}
+          alt={alt}
+          className="max-h-full max-w-full object-contain"
+        />
+      </div>
+    </div>
+  )
+}
+
 function ProjectImageCarousel({
   images,
   alt,
-  ctaLabel,
+  expandLabel,
+  onExpand,
 }: {
   images: string[]
   alt: string
-  ctaLabel: string
+  expandLabel: string
+  onExpand: (index: number) => void
 }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -211,38 +322,40 @@ function ProjectImageCarousel({
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {images.map((src, i) => (
-        <img
-          key={src}
-          src={src}
-          alt={i === index ? alt : ''}
-          className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-700 ${
-            i === index ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-      ))}
-      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/70 to-transparent px-4 py-4">
-        <p className="text-xs uppercase tracking-[0.18em] text-cream/80">
-          {ctaLabel}
-        </p>
-        <div
-          className="flex gap-2"
-          onClick={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-        >
-          {images.map((src, i) => (
-            <button
-              key={src}
-              type="button"
-              aria-label={`${i + 1}`}
-              onClick={() => setIndex(i)}
-              className={`h-1.5 w-6 transition-colors duration-300 ${
-                i === index ? 'bg-cream' : 'bg-cream/35 hover:bg-cream/60'
-              }`}
-            />
-          ))}
+      <button
+        type="button"
+        aria-label={expandLabel}
+        onClick={() => onExpand(index)}
+        className="absolute inset-0 cursor-zoom-in"
+      >
+        {images.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt={i === index ? alt : ''}
+            className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-700 ${
+              i === index ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        ))}
+      </button>
+      {images.length > 1 ? (
+        <div className="absolute inset-x-0 bottom-0 z-10 flex justify-end bg-gradient-to-t from-black/55 to-transparent px-4 py-4">
+          <div className="flex gap-2">
+            {images.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                aria-label={`${i + 1}`}
+                onClick={() => setIndex(i)}
+                className={`h-1.5 w-6 transition-colors duration-300 ${
+                  i === index ? 'bg-cream' : 'bg-cream/35 hover:bg-cream/60'
+                }`}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   )
 }
@@ -254,20 +367,32 @@ function ProjectsPanelContent({
   t: Translation
   locale: Locale
 }) {
-  const [openProject, setOpenProject] = useState<'zumex' | 'worldcup-2026' | null>(
-    null,
-  )
+  const [openProject, setOpenProject] = useState<
+    'zumex' | 'worldcup-2026' | 'worldcup-2022' | 'coworking' | 'sumero' | null
+  >(null)
+  const [lightbox, setLightbox] = useState<{
+    images: string[]
+    index: number
+    alt: string
+  } | null>(null)
   const howItWorks = getZumexHowItWorks(locale)
   const porraDetails = getPorra2026Details(locale)
+  const porra2022Details = getPorra2022Details(locale)
+  const coworkingDetails = getCoworkingDetails(locale)
+  const sumeroDetails = getSumeroDetails(locale)
 
   useEffect(() => {
-    if (!openProject) return
+    if (!openProject || lightbox) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpenProject(null)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [openProject])
+  }, [openProject, lightbox])
+
+  const openLightbox = (images: string[], index: number, alt: string) => {
+    setLightbox({ images, index, alt })
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-6 sm:px-10">
@@ -281,48 +406,59 @@ function ProjectsPanelContent({
         {t.projects.items.map((item, i) => {
           const isZumex = item.id === 'zumex'
           const isPorra = item.id === 'worldcup-2026'
-          const expandable = isZumex || isPorra
-          const ctaLabel = isPorra ? t.projects.viewDetails : t.projects.learnMore
+          const isPorra2022 = item.id === 'worldcup-2022'
+          const isCoworking = item.id === 'coworking'
+          const isSumero = item.id === 'sumero'
+          const expandable =
+            isZumex || isPorra || isPorra2022 || isCoworking || isSumero
+          const ctaLabel = isPorra
+            ? t.projects.viewDetails
+            : t.projects.learnMore
+          const projectImages = isZumex
+            ? [zumexScrapingImage]
+            : isPorra
+              ? PORRA_IMAGES
+              : isPorra2022
+                ? PORRA_2022_IMAGES
+                : isCoworking
+                  ? COWORKING_IMAGES
+                  : isSumero
+                    ? SUMERO_IMAGES
+                    : []
 
-          const media = (
-            <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden bg-cream/[0.04]">
-              {isZumex ? (
-                <>
-                  <img
-                    src={zumexScrapingImage}
-                    alt={item.title}
-                    className="h-full w-full object-cover object-top"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-4">
-                    <p className="text-xs uppercase tracking-[0.18em] text-cream/80">
-                      {ctaLabel}
-                    </p>
-                  </div>
-                </>
-              ) : isPorra ? (
-                <ProjectImageCarousel
-                  images={PORRA_IMAGES}
-                  alt={item.title}
-                  ctaLabel={ctaLabel}
-                />
-              ) : (
-                <div className="flex h-full items-end p-4">
-                  <p className="text-xs uppercase tracking-[0.18em] text-cream/35">
-                    {t.projects.photosNote}
-                  </p>
-                </div>
-              )}
-            </div>
-          )
+          const openDetails = () => {
+            if (isZumex) setOpenProject('zumex')
+            else if (isPorra) setOpenProject('worldcup-2026')
+            else if (isPorra2022) setOpenProject('worldcup-2022')
+            else if (isCoworking) setOpenProject('coworking')
+            else if (isSumero) setOpenProject('sumero')
+          }
 
-          const body = (
-            <>
-              <h3 className="mb-3 text-xl tracking-wide sm:text-2xl">
-                {item.title}
-              </h3>
+          return (
+            <li
+              key={item.id}
+              className="anim-stagger"
+              style={{ animationDelay: `${260 + i * 90}ms` }}
+            >
+              <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <h3 className="text-xl tracking-wide sm:text-2xl">
+                  {item.title}
+                </h3>
+                <time
+                  dateTime={item.year}
+                  className="shrink-0 text-xs uppercase tracking-[0.18em] text-cream/45"
+                >
+                  {item.year}
+                </time>
+              </div>
               {item.subtitle ? (
-                <p className="mb-4 max-w-2xl text-sm leading-relaxed text-cream/60 sm:text-base">
+                <p className="mb-3 max-w-2xl text-sm leading-relaxed text-cream/60 sm:text-base">
                   {item.subtitle}
+                </p>
+              ) : null}
+              {'lead' in item && item.lead ? (
+                <p className="mb-4 max-w-2xl text-sm leading-relaxed text-cream/70 sm:text-base">
+                  {item.lead}
                 </p>
               ) : null}
               <div className="flex max-w-2xl flex-col gap-3 text-sm leading-relaxed text-cream/80 sm:text-base">
@@ -381,44 +517,74 @@ function ProjectsPanelContent({
                   </p>
                 </div>
               ) : null}
-            </>
-          )
 
-          const open = () =>
-            setOpenProject(isZumex ? 'zumex' : 'worldcup-2026')
-
-          return (
-            <li
-              key={item.id}
-              className="anim-stagger"
-              style={{ animationDelay: `${260 + i * 90}ms` }}
-            >
               {expandable ? (
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={open}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      open()
-                    }
-                  }}
-                  className="w-full cursor-pointer text-left transition-opacity duration-300 hover:opacity-80"
+                <button
+                  type="button"
+                  onClick={openDetails}
+                  className="mt-8 inline-flex items-center gap-2 border border-cream/30 px-5 py-3 text-xs uppercase tracking-[0.18em] text-cream transition-colors duration-300 hover:border-cream hover:bg-cream/5"
                 >
-                  {body}
-                  {media}
-                </div>
-              ) : (
-                <>
-                  {body}
-                  {media}
-                </>
-              )}
+                  {ctaLabel}
+                  <ArrowUpRight size={16} strokeWidth={1.5} />
+                </button>
+              ) : null}
+
+              <div className="relative mt-8 aspect-[16/9] w-full overflow-hidden bg-cream/[0.04]">
+                {projectImages.length > 0 ? (
+                  projectImages.length === 1 ? (
+                    <button
+                      type="button"
+                      aria-label={t.projects.expandImage}
+                      onClick={() =>
+                        openLightbox(projectImages, 0, item.title)
+                      }
+                      className="h-full w-full cursor-zoom-in"
+                    >
+                      <img
+                        src={projectImages[0]}
+                        alt={item.title}
+                        className="h-full w-full object-cover object-top"
+                      />
+                    </button>
+                  ) : (
+                    <ProjectImageCarousel
+                      images={projectImages}
+                      alt={item.title}
+                      expandLabel={t.projects.expandImage}
+                      onExpand={(index) =>
+                        openLightbox(projectImages, index, item.title)
+                      }
+                    />
+                  )
+                ) : (
+                  <div className="flex h-full items-end p-4">
+                    <p className="text-xs uppercase tracking-[0.18em] text-cream/35">
+                      {t.projects.photosNote}
+                    </p>
+                  </div>
+                )}
+              </div>
             </li>
           )
         })}
       </ul>
+
+      {lightbox ? (
+        <ProjectImageLightbox
+          images={lightbox.images}
+          index={lightbox.index}
+          alt={lightbox.alt}
+          closeLabel={t.projects.close}
+          previousLabel={t.projects.previousImage}
+          nextLabel={t.projects.nextImage}
+          onClose={() => setLightbox(null)}
+          onIndexChange={(index) =>
+            setLightbox((current) =>
+              current ? { ...current, index } : current,
+            )
+          }
+        />
+      ) : null}
 
       {openProject === 'zumex' && (
         <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true">
@@ -579,6 +745,231 @@ function ProjectsPanelContent({
                     <p className="text-sm leading-relaxed text-cream/80 sm:text-base">
                       {porraDetails.architecture}
                     </p>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openProject === 'worldcup-2022' && (
+        <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true">
+          <button
+            type="button"
+            aria-label={t.projects.close}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm anim-panel-backdrop"
+            onClick={() => setOpenProject(null)}
+          />
+          <div className="absolute inset-3 overflow-hidden bg-[#111111] sm:inset-8 lg:inset-12 anim-panel">
+            <div className="flex h-full flex-col">
+              <header className="flex shrink-0 items-start justify-between border-b border-cream/10 px-6 py-6 sm:px-10">
+                <h3 className="font-hn text-2xl tracking-wide sm:text-3xl">
+                  {porra2022Details.title}
+                </h3>
+                <button
+                  type="button"
+                  aria-label={t.projects.close}
+                  onClick={() => setOpenProject(null)}
+                  className="text-cream transition-opacity duration-300 hover:opacity-60"
+                >
+                  <X size={28} strokeWidth={1.5} />
+                </button>
+              </header>
+              <div className="flex-1 overflow-y-auto px-6 py-10 sm:px-10">
+                <div className="mx-auto max-w-3xl">
+                  <p className="mb-10 border-b border-cream/10 pb-10 text-base leading-relaxed text-cream/80 sm:text-lg">
+                    {porra2022Details.intro}
+                  </p>
+
+                  <div className="mb-6 flex flex-col gap-4 text-base leading-relaxed text-cream/75 sm:text-lg">
+                    {porra2022Details.paragraphs.map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                    ))}
+                  </div>
+
+                  <ul className="mb-10 list-disc space-y-1 pl-5 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {porra2022Details.recalculates.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+
+                  <p className="mb-4 text-base leading-relaxed text-cream/75 sm:text-lg">
+                    {porra2022Details.frontendIntro}
+                  </p>
+                  <ul className="mb-12 list-disc space-y-1 pl-5 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {porra2022Details.frontendDisplays.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+
+                  <p className="mb-12 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {porra2022Details.architecture}
+                  </p>
+
+                  <section className="mb-6">
+                    <h4 className="mb-6 text-xl tracking-wide">
+                      {porra2022Details.technologiesTitle}
+                    </h4>
+                    <div className="mb-8">
+                      <p className="mb-3 text-sm uppercase tracking-[0.16em] text-cream/50">
+                        {porra2022Details.frontendTitle}
+                      </p>
+                      <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-cream/80">
+                        {porra2022Details.frontendTechnologies.map((tech) => (
+                          <li key={tech}>{tech}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="mb-3 text-sm uppercase tracking-[0.16em] text-cream/50">
+                        {porra2022Details.backendTitle}
+                      </p>
+                      <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-cream/80">
+                        {porra2022Details.backendTechnologies.map((tech) => (
+                          <li key={tech}>{tech}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openProject === 'coworking' && (
+        <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true">
+          <button
+            type="button"
+            aria-label={t.projects.close}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm anim-panel-backdrop"
+            onClick={() => setOpenProject(null)}
+          />
+          <div className="absolute inset-3 overflow-hidden bg-[#111111] sm:inset-8 lg:inset-12 anim-panel">
+            <div className="flex h-full flex-col">
+              <header className="flex shrink-0 items-start justify-between border-b border-cream/10 px-6 py-6 sm:px-10">
+                <h3 className="font-hn text-2xl tracking-wide sm:text-3xl">
+                  {coworkingDetails.title}
+                </h3>
+                <button
+                  type="button"
+                  aria-label={t.projects.close}
+                  onClick={() => setOpenProject(null)}
+                  className="text-cream transition-opacity duration-300 hover:opacity-60"
+                >
+                  <X size={28} strokeWidth={1.5} />
+                </button>
+              </header>
+              <div className="flex-1 overflow-y-auto px-6 py-10 sm:px-10">
+                <div className="mx-auto max-w-3xl">
+                  <div className="mb-6 flex flex-col gap-4 text-base leading-relaxed text-cream/75 sm:text-lg">
+                    {coworkingDetails.paragraphs.map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                    ))}
+                  </div>
+
+                  <ul className="mb-10 list-disc space-y-1 pl-5 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {coworkingDetails.reservationTypes.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+
+                  <div className="mb-12 flex flex-col gap-4 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {coworkingDetails.midParagraphs.map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                    ))}
+                  </div>
+
+                  <p className="mb-12 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {coworkingDetails.architecture}
+                  </p>
+
+                  <section className="mb-6">
+                    <h4 className="mb-6 text-xl tracking-wide">
+                      {coworkingDetails.technologiesTitle}
+                    </h4>
+                    <div className="mb-8">
+                      <p className="mb-3 text-sm uppercase tracking-[0.16em] text-cream/50">
+                        {coworkingDetails.frontendTitle}
+                      </p>
+                      <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-cream/80">
+                        {coworkingDetails.frontendTechnologies.map((tech) => (
+                          <li key={tech}>{tech}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="mb-3 text-sm uppercase tracking-[0.16em] text-cream/50">
+                        {coworkingDetails.backendTitle}
+                      </p>
+                      <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-cream/80">
+                        {coworkingDetails.backendTechnologies.map((tech) => (
+                          <li key={tech}>{tech}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {openProject === 'sumero' && (
+        <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true">
+          <button
+            type="button"
+            aria-label={t.projects.close}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm anim-panel-backdrop"
+            onClick={() => setOpenProject(null)}
+          />
+          <div className="absolute inset-3 overflow-hidden bg-[#111111] sm:inset-8 lg:inset-12 anim-panel">
+            <div className="flex h-full flex-col">
+              <header className="flex shrink-0 items-start justify-between border-b border-cream/10 px-6 py-6 sm:px-10">
+                <h3 className="font-hn text-2xl tracking-wide sm:text-3xl">
+                  {sumeroDetails.title}
+                </h3>
+                <button
+                  type="button"
+                  aria-label={t.projects.close}
+                  onClick={() => setOpenProject(null)}
+                  className="text-cream transition-opacity duration-300 hover:opacity-60"
+                >
+                  <X size={28} strokeWidth={1.5} />
+                </button>
+              </header>
+              <div className="flex-1 overflow-y-auto px-6 py-10 sm:px-10">
+                <div className="mx-auto max-w-3xl">
+                  <div className="mb-6 flex flex-col gap-4 text-base leading-relaxed text-cream/75 sm:text-lg">
+                    {sumeroDetails.paragraphs.map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                    ))}
+                  </div>
+
+                  <ul className="mb-10 list-disc space-y-1 pl-5 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {sumeroDetails.rules.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+
+                  <div className="mb-12 flex flex-col gap-4 text-sm leading-relaxed text-cream/80 sm:text-base">
+                    {sumeroDetails.midParagraphs.map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                    ))}
+                  </div>
+
+                  <section className="mb-6">
+                    <h4 className="mb-4 text-xl tracking-wide">
+                      {sumeroDetails.technologiesTitle}
+                    </h4>
+                    <ul className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-cream/80">
+                      {sumeroDetails.technologies.map((tech) => (
+                        <li key={tech}>{tech}</li>
+                      ))}
+                    </ul>
                   </section>
                 </div>
               </div>

@@ -170,9 +170,13 @@ export const translations = {
       hubLabel: 'Explore builds, experiments, and platforms I have shipped on my own.',
       learnMore: 'How it works',
       viewDetails: 'View details',
+      expandImage: 'View image',
+      previousImage: 'Previous image',
+      nextImage: 'Next image',
       items: [
         {
           id: 'zumex',
+          year: '2026',
           title: 'Zumex Dealers & Distributors Scraping',
           subtitle:
             'An AI-powered platform that crawls, analyzes and scores foodservice equipment dealers to identify the best commercial partners.',
@@ -185,6 +189,7 @@ export const translations = {
         },
         {
           id: 'worldcup-2026',
+          year: '2026',
           title: 'World Cup Family Pool 2026',
           subtitle: 'A family tradition, powered by code.',
           paragraphs: [
@@ -218,27 +223,79 @@ export const translations = {
             'The participant with the highest total score at the end of the tournament wins the family pool.',
         },
         {
-          id: 'coworking',
-          title: 'Coworking Management Platform',
-          subtitle: '',
+          id: 'worldcup-2022',
+          year: '2022',
+          title: 'World Cup Family Pool 2022',
+          subtitle:
+            "The first digital version of our family's World Cup prediction game.",
           paragraphs: [
-            'Design and development of a coworking management website — Final Degree Project at the Polytechnic University of Valencia.',
+            'Every FIFA World Cup, my family organizes a prediction competition where everyone tries to guess how the tournament will unfold.',
+            'For the 2022 edition, I developed the first web version of the project, replacing spreadsheets with a complete web application composed of a React frontend and a Spring Boot backend.',
+            'Participants could register their predictions, follow the live family ranking, check every player\'s picks, and see how the standings evolved as the tournament progressed.',
+            'Unlike traditional betting games, predictions were based on which teams would advance through each stage of the tournament, with points awarded as the real results unfolded.',
+            'The project was created exclusively for my family, purely for entertainment and with no commercial purpose.',
           ],
+          scoringTitle: 'Scoring System',
+          scoringIntro:
+            'Participants predicted every knockout stage before the tournament started.',
+          scoringPointsLabel: 'Points were awarded as follows:',
+          scoringHeaders: { prediction: 'Prediction', points: 'Points' },
+          scoringRows: [
+            { prediction: 'Teams reaching Round of 16', points: '2' },
+            { prediction: 'Teams reaching Quarter-finals', points: '4' },
+            { prediction: 'Teams reaching Semi-finals', points: '8' },
+            { prediction: 'Teams reaching the Final', points: '16' },
+            { prediction: 'World Champion', points: '32' },
+          ],
+          scoringFooter:
+            "Players accumulated points as teams progressed through the tournament, while the application also calculated each participant's maximum possible score, showing how many points they could still achieve.",
         },
         {
           id: 'sumero',
-          title: 'Sumero Generator',
-          subtitle: '',
+          year: '2022',
+          title: 'Sumero Puzzle Generator',
+          subtitle:
+            'An algorithmic generator for creating valid Sumero puzzle boards.',
           paragraphs: [
-            'Mental exercise application similar to Sudoku — a logic challenge to train focus and pattern recognition.',
+            'This project was developed to automatically generate valid Sumero boards, a logic puzzle inspired by Sudoku where each cell contains three digits and one empty position, while rows and columns must satisfy specific sum constraints without repeating numbers.',
+            'Rather than solving existing puzzles, the application focuses on generating complete and valid game boards that can later be transformed into playable puzzles.',
+            'Once a valid solution was generated, an Excel automation transformed the completed board into a playable puzzle by automatically removing selected values and formatting the grid to resemble a numeric crossword.',
+            'The project combines constraint satisfaction, random search and validation algorithms to produce unique puzzle layouts.',
+          ],
+          includesTitle: 'Main Features',
+          includes: [
+            'Automatic generation of valid Sumero boards',
+            'Randomized solution generation',
+            'Row and column sum validation',
+            'Sudoku-like digit uniqueness constraints',
+            'Excel automation to generate playable puzzle layouts',
+            'Simple JavaFX interface to launch the generator',
           ],
         },
         {
-          id: 'worldcup-2022',
-          title: 'Betting Pool Management Platform',
-          subtitle: '',
+          id: 'coworking',
+          year: '2021',
+          title: 'Coworking Management System',
+          subtitle: 'A complete workspace reservation and management platform.',
+          lead:
+            'Built as part of a university software engineering project, this application reproduces the workflow of a real coworking management platform, including reservations, authentication, payments and administrative tools.',
           paragraphs: [
-            'Interactive website for organizing predictions and bets during the 2022 FIFA World Cup.',
+            'This project is a full-stack web application developed to manage the daily operations of a coworking space.',
+            'The platform allows users to register, authenticate, browse available workspaces, make reservations, manage their bookings, and securely pay for memberships and services through Stripe.',
+            'Besides the customer-facing features, the application also provides an administration panel to manage rooms, users, companies, reservations, invoices and payments.',
+            'The project follows a traditional client-server architecture, with an Angular frontend consuming a Spring Boot REST API connected to a MySQL database.',
+          ],
+          includesTitle: 'Main Features',
+          includes: [
+            'User authentication with JWT',
+            'Workspace and meeting room management',
+            'Multiple reservation types',
+            'Recurring bookings',
+            'Stripe payment integration',
+            'Invoice management',
+            'Company management',
+            'Administrator dashboard',
+            'Responsive user interface',
           ],
         },
       ],
@@ -458,9 +515,13 @@ export const translations = {
         'Explora builds, experimentos y plataformas que he lanzado por mi cuenta.',
       learnMore: 'Cómo funciona',
       viewDetails: 'Ver detalles',
+      expandImage: 'Ver imagen',
+      previousImage: 'Imagen anterior',
+      nextImage: 'Imagen siguiente',
       items: [
         {
           id: 'zumex',
+          year: '2026',
           title: 'Scraping de dealers y distribuidores Zumex',
           subtitle:
             'Una plataforma impulsada por IA que rastrea, analiza y puntúa dealers de equipamiento foodservice para identificar a los mejores partners comerciales.',
@@ -473,6 +534,7 @@ export const translations = {
         },
         {
           id: 'worldcup-2026',
+          year: '2026',
           title: 'Porra familiar del Mundial 2026',
           subtitle: 'Una tradición familiar, impulsada por código.',
           paragraphs: [
@@ -506,27 +568,80 @@ export const translations = {
             'El participante con la puntuación total más alta al final del torneo gana la porra familiar.',
         },
         {
-          id: 'coworking',
-          title: 'Plataforma de gestión de coworking',
-          subtitle: '',
+          id: 'worldcup-2022',
+          year: '2022',
+          title: 'Porra familiar del Mundial 2022',
+          subtitle:
+            'La primera versión digital de la porra del Mundial de nuestra familia.',
           paragraphs: [
-            'Diseño y desarrollo de un sitio web de gestión de coworking — Trabajo de Fin de Grado en la Universitat Politècnica de València.',
+            'En cada Mundial de la FIFA, mi familia organiza una competición de predicciones en la que todo el mundo intenta adivinar cómo se desarrollará el torneo.',
+            'Para la edición de 2022, desarrollé la primera versión web del proyecto, sustituyendo las hojas de cálculo por una aplicación completa con frontend en React y backend en Spring Boot.',
+            'Los participantes podían registrar sus predicciones, seguir el ranking familiar en vivo, consultar las elecciones de cada jugador y ver cómo evolucionaba la clasificación a medida que avanzaba el torneo.',
+            'A diferencia de las porras tradicionales, las predicciones se basaban en qué equipos avanzarían en cada fase del torneo, y los puntos se otorgaban conforme se conocían los resultados reales.',
+            'El proyecto se creó exclusivamente para mi familia, solo por diversión y sin ningún fin comercial.',
           ],
+          scoringTitle: 'Sistema de puntuación',
+          scoringIntro:
+            'Los participantes predijeron todas las fases eliminatorias antes de que empezara el torneo.',
+          scoringPointsLabel: 'Los puntos se otorgaban así:',
+          scoringHeaders: { prediction: 'Predicción', points: 'Puntos' },
+          scoringRows: [
+            { prediction: 'Equipos que llegan a octavos', points: '2' },
+            { prediction: 'Equipos que llegan a cuartos', points: '4' },
+            { prediction: 'Equipos que llegan a semifinales', points: '8' },
+            { prediction: 'Equipos que llegan a la final', points: '16' },
+            { prediction: 'Campeón del mundo', points: '32' },
+          ],
+          scoringFooter:
+            'Los jugadores acumulaban puntos a medida que los equipos avanzaban en el torneo, y la aplicación también calculaba la puntuación máxima posible de cada participante, mostrando cuántos puntos podían alcanzar todavía.',
         },
         {
           id: 'sumero',
-          title: 'Sumero Generator',
-          subtitle: '',
+          year: '2022',
+          title: 'Generador de puzzles Sumero',
+          subtitle:
+            'Un generador algorítmico para crear tableros Sumero válidos.',
           paragraphs: [
-            'Aplicación de ejercicio mental similar al Sudoku — un reto de lógica para entrenar el foco y el reconocimiento de patrones.',
+            'Este proyecto se desarrolló para generar automáticamente tableros Sumero válidos, un puzzle lógico inspirado en el Sudoku donde cada celda contiene tres dígitos y una posición vacía, mientras que filas y columnas deben cumplir restricciones de suma específicas sin repetir números.',
+            'En lugar de resolver puzzles existentes, la aplicación se centra en generar tableros de juego completos y válidos que después pueden transformarse en puzzles jugables.',
+            'Una vez generada una solución válida, una automatización de Excel transformaba el tablero completo en un puzzle jugable eliminando automáticamente valores seleccionados y formateando la cuadrícula para que se asemejara a un crucigrama numérico.',
+            'El proyecto combina satisfacción de restricciones, búsqueda aleatoria y algoritmos de validación para producir layouts de puzzle únicos.',
+          ],
+          includesTitle: 'Funcionalidades principales',
+          includes: [
+            'Generación automática de tableros Sumero válidos',
+            'Generación aleatoria de soluciones',
+            'Validación de sumas por filas y columnas',
+            'Restricciones de unicidad de dígitos al estilo Sudoku',
+            'Automatización en Excel para generar puzzles jugables',
+            'Interfaz sencilla en JavaFX para lanzar el generador',
           ],
         },
         {
-          id: 'worldcup-2022',
-          title: 'Plataforma de porras (Mundial 2022)',
-          subtitle: '',
+          id: 'coworking',
+          year: '2021',
+          title: 'Sistema de gestión de coworking',
+          subtitle:
+            'Una plataforma completa de reserva y gestión de espacios de trabajo.',
+          lead:
+            'Desarrollada como parte de un proyecto universitario de ingeniería del software, esta aplicación reproduce el flujo de trabajo de una plataforma real de gestión de coworking, incluyendo reservas, autenticación, pagos y herramientas de administración.',
           paragraphs: [
-            'Sitio web interactivo para organizar predicciones y apuestas durante el Mundial FIFA 2022.',
+            'Este proyecto es una aplicación web full-stack desarrollada para gestionar el día a día de un espacio de coworking.',
+            'La plataforma permite a los usuarios registrarse, autenticarse, explorar espacios disponibles, hacer reservas, gestionar sus reservas y pagar de forma segura membresías y servicios a través de Stripe.',
+            'Además de las funcionalidades orientadas al cliente, la aplicación incluye un panel de administración para gestionar salas, usuarios, empresas, reservas, facturas y pagos.',
+            'El proyecto sigue una arquitectura cliente-servidor tradicional, con un frontend en Angular que consume una API REST de Spring Boot conectada a una base de datos MySQL.',
+          ],
+          includesTitle: 'Funcionalidades principales',
+          includes: [
+            'Autenticación de usuarios con JWT',
+            'Gestión de espacios de trabajo y salas de reuniones',
+            'Múltiples tipos de reserva',
+            'Reservas recurrentes',
+            'Integración de pagos con Stripe',
+            'Gestión de facturas',
+            'Gestión de empresas',
+            'Panel de administrador',
+            'Interfaz de usuario responsive',
           ],
         },
       ],
@@ -747,9 +862,13 @@ export const translations = {
         'Explorez builds, expérimentations et plateformes que j’ai lancés de mon côté.',
       learnMore: 'Comment ça marche',
       viewDetails: 'Voir les détails',
+      expandImage: 'Voir l’image',
+      previousImage: 'Image précédente',
+      nextImage: 'Image suivante',
       items: [
         {
           id: 'zumex',
+          year: '2026',
           title: 'Scraping des dealers et distributeurs Zumex',
           subtitle:
             'Une plateforme alimentée par l’IA qui crawl, analyse et note les dealers d’équipement foodservice afin d’identifier les meilleurs partenaires commerciaux.',
@@ -762,6 +881,7 @@ export const translations = {
         },
         {
           id: 'worldcup-2026',
+          year: '2026',
           title: 'Pronostics familiaux Coupe du Monde 2026',
           subtitle: 'Une tradition familiale, propulsée par le code.',
           paragraphs: [
@@ -795,27 +915,80 @@ export const translations = {
             'Le participant avec le score total le plus élevé à la fin du tournoi remporte le concours familial.',
         },
         {
-          id: 'coworking',
-          title: 'Plateforme de gestion de coworking',
-          subtitle: '',
+          id: 'worldcup-2022',
+          year: '2022',
+          title: 'Pronostics familiaux Coupe du Monde 2022',
+          subtitle:
+            'La première version numérique du jeu de prédictions familial pour la Coupe du Monde.',
           paragraphs: [
-            'Conception et développement d’un site de gestion de coworking — projet de fin d’études à l’Universitat Politècnica de València.',
+            'À chaque Coupe du Monde de la FIFA, ma famille organise une compétition de prédictions où tout le monde essaie de deviner le déroulement du tournoi.',
+            'Pour l’édition 2022, j’ai développé la première version web du projet, remplaçant les tableurs par une application complète composée d’un frontend React et d’un backend Spring Boot.',
+            'Les participants pouvaient enregistrer leurs prédictions, suivre le classement familial en direct, consulter les choix de chaque joueur et voir l’évolution du classement au fil du tournoi.',
+            'Contrairement aux paris traditionnels, les prédictions portaient sur les équipes qui avanceraient à chaque phase du tournoi, avec des points attribués au fur et à mesure des résultats réels.',
+            'Le projet a été créé exclusivement pour ma famille, purement pour le divertissement et sans aucun but commercial.',
           ],
+          scoringTitle: 'Système de points',
+          scoringIntro:
+            'Les participants prédisaient toutes les phases à élimination directe avant le début du tournoi.',
+          scoringPointsLabel: 'Les points étaient attribués comme suit :',
+          scoringHeaders: { prediction: 'Prédiction', points: 'Points' },
+          scoringRows: [
+            { prediction: 'Équipes atteignant les 8es de finale', points: '2' },
+            { prediction: 'Équipes atteignant les quarts de finale', points: '4' },
+            { prediction: 'Équipes atteignant les demi-finales', points: '8' },
+            { prediction: 'Équipes atteignant la finale', points: '16' },
+            { prediction: 'Champion du monde', points: '32' },
+          ],
+          scoringFooter:
+            'Les joueurs accumulaient des points au fur et à mesure de la progression des équipes, tandis que l’application calculait aussi le score maximum possible de chaque participant, indiquant combien de points ils pouvaient encore atteindre.',
         },
         {
           id: 'sumero',
-          title: 'Sumero Generator',
-          subtitle: '',
+          year: '2022',
+          title: 'Générateur de puzzles Sumero',
+          subtitle:
+            'Un générateur algorithmique pour créer des plateaux Sumero valides.',
           paragraphs: [
-            'Application d’exercice mental similaire au Sudoku — un défi de logique pour entraîner le focus et la reconnaissance de motifs.',
+            'Ce projet a été développé pour générer automatiquement des plateaux Sumero valides, un puzzle logique inspiré du Sudoku où chaque cellule contient trois chiffres et une position vide, tandis que les lignes et colonnes doivent respecter des contraintes de somme spécifiques sans répéter les nombres.',
+            'Plutôt que de résoudre des puzzles existants, l’application se concentre sur la génération de plateaux de jeu complets et valides qui peuvent ensuite être transformés en puzzles jouables.',
+            'Une fois une solution valide générée, une automatisation Excel transformait le plateau complet en puzzle jouable en retirant automatiquement certaines valeurs et en formatant la grille pour qu’elle ressemble à un crossword numérique.',
+            'Le projet combine satisfaction de contraintes, recherche aléatoire et algorithmes de validation pour produire des layouts de puzzle uniques.',
+          ],
+          includesTitle: 'Fonctionnalités principales',
+          includes: [
+            'Génération automatique de plateaux Sumero valides',
+            'Génération aléatoire de solutions',
+            'Validation des sommes par lignes et colonnes',
+            'Contraintes d’unicité des chiffres de type Sudoku',
+            'Automatisation Excel pour générer des puzzles jouables',
+            'Interface JavaFX simple pour lancer le générateur',
           ],
         },
         {
-          id: 'worldcup-2022',
-          title: 'Plateforme de pronostics (Coupe du Monde 2022)',
-          subtitle: '',
+          id: 'coworking',
+          year: '2021',
+          title: 'Système de gestion de coworking',
+          subtitle:
+            'Une plateforme complète de réservation et de gestion d’espaces de travail.',
+          lead:
+            'Développée dans le cadre d’un projet universitaire de génie logiciel, cette application reproduit le workflow d’une vraie plateforme de gestion de coworking, incluant réservations, authentification, paiements et outils d’administration.',
           paragraphs: [
-            'Site interactif pour organiser prédictions et paris pendant la Coupe du Monde FIFA 2022.',
+            'Ce projet est une application web full-stack développée pour gérer le quotidien d’un espace de coworking.',
+            'La plateforme permet aux utilisateurs de s’inscrire, de s’authentifier, de parcourir les espaces disponibles, de faire des réservations, de gérer leurs réservations et de payer en toute sécurité abonnements et services via Stripe.',
+            'En plus des fonctionnalités destinées aux clients, l’application fournit aussi un panneau d’administration pour gérer salles, utilisateurs, entreprises, réservations, factures et paiements.',
+            'Le projet suit une architecture client-serveur traditionnelle, avec un frontend Angular qui consomme une API REST Spring Boot connectée à une base de données MySQL.',
+          ],
+          includesTitle: 'Fonctionnalités principales',
+          includes: [
+            'Authentification des utilisateurs avec JWT',
+            'Gestion des espaces de travail et salles de réunion',
+            'Plusieurs types de réservation',
+            'Réservations récurrentes',
+            'Intégration des paiements Stripe',
+            'Gestion des factures',
+            'Gestion des entreprises',
+            'Tableau de bord administrateur',
+            'Interface utilisateur responsive',
           ],
         },
       ],

@@ -194,7 +194,7 @@ export function Projects({
     index: number
     alt: string
   } | null>(null)
-  const [expanded, setExpanded] = useState<string | null>(studies[0]?.id ?? null)
+  const [expanded, setExpanded] = useState<string | null>(null)
 
   return (
     <section id="projects" className="scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32 lg:px-10">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import type { Locale } from '../i18n'
 import type { Chrome } from '../content/chrome'
 import { logoMark } from '../lib/assets'
@@ -14,6 +15,8 @@ const LINKS = [
   { id: 'contact', key: 'contact' as const },
 ]
 
+const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1]
+
 export function Nav({
   chrome,
   locale,
@@ -25,6 +28,7 @@ export function Nav({
 }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const reduce = useReducedMotion()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -61,7 +65,7 @@ export function Nav({
             <a
               key={link.id}
               href={`#${link.id}`}
-              className="text-sm text-muted transition-colors duration-200 hover:text-ink"
+              className="text-sm text-ink/70 transition-colors duration-200 hover:text-ink"
             >
               {chrome.nav[link.key]}
             </a>
@@ -72,7 +76,7 @@ export function Nav({
           <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
           <button
             type="button"
-            className="btn-press inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-surface text-ink lg:hidden"
+            className="btn-press inline-flex h-10 w-10 items-center justify-center rounded-lg border border-ink/15 bg-surface text-ink lg:hidden"
             aria-label={open ? chrome.nav.closeMenu : chrome.nav.openMenu}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -82,22 +86,33 @@ export function Nav({
         </div>
       </div>
 
-      {open ? (
-        <div className="border-t border-line bg-surface lg:hidden">
-          <nav className="mx-auto flex max-w-[1400px] flex-col gap-1 px-5 py-4" aria-label="Mobile">
-            {LINKS.map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-3 text-base text-ink transition-colors hover:bg-bg"
-              >
-                {chrome.nav[link.key]}
-              </a>
-            ))}
-          </nav>
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            className="border-t border-line bg-surface lg:hidden"
+            initial={reduce ? false : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: EASE_OUT }}
+          >
+            <nav
+              className="mx-auto flex max-w-[1400px] flex-col gap-1 px-5 py-4"
+              aria-label="Mobile"
+            >
+              {LINKS.map((link) => (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-3 text-base text-ink transition-colors hover:bg-bg"
+                >
+                  {chrome.nav[link.key]}
+                </a>
+              ))}
+            </nav>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   )
 }

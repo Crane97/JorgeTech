@@ -16,6 +16,7 @@ import {
 import { Lightbox } from './Lightbox'
 import { ProjectCarousel } from './ProjectCarousel'
 import { Reveal } from './Reveal'
+import { SpotlightMedia } from './SpotlightMedia'
 
 type CaseStudy = {
   id: string
@@ -224,7 +225,7 @@ export function Projects({
                     className={`lg:col-span-7 ${mediaLeft ? 'lg:order-1' : 'lg:order-2'}`}
                     delay={0.04}
                   >
-                    <div className="aspect-[16/10] overflow-hidden rounded-xl border border-line bg-surface shadow-sm">
+                    <SpotlightMedia className="group aspect-[16/10] overflow-hidden rounded-xl border border-line bg-surface shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-accent/30 hover:shadow-md">
                       {study.images.length > 0 ? (
                         study.images.length === 1 ? (
                           <button
@@ -237,7 +238,7 @@ export function Projects({
                                 alt: study.title,
                               })
                             }
-                            className="group h-full w-full cursor-zoom-in"
+                            className="h-full w-full cursor-zoom-in"
                           >
                             <img
                               src={study.images[0]}
@@ -266,7 +267,7 @@ export function Projects({
                           </p>
                         </div>
                       )}
-                    </div>
+                    </SpotlightMedia>
                   </Reveal>
 
                   <Reveal

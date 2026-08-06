@@ -1,5 +1,4 @@
 import zumexScrapingImage from '../assets/scraping/3493f21e-c223-4bab-b5bf-15128c4e64e6.png'
-import heroPortrait from '../assets/hero.png'
 import logoMark from '../assets/logo/JRLogoBLK.png'
 
 const boxingImageModules = import.meta.glob<{ default: string }>(
@@ -43,4 +42,4 @@ export const SUMERO_IMAGES = Object.keys(sumeroImageModules)
   .map((key) => sumeroImageModules[key].default)
 
 export const ZUMEX_IMAGES = [zumexScrapingImage]
-export { heroPortrait, logoMark }
+export { logoMark }

@@ -6,6 +6,7 @@ import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
 import { Projects } from './components/Projects'
 import { Resume } from './components/Resume'
+import { ScrollProgress } from './components/ScrollProgress'
 import { TechStack } from './components/TechStack'
 import { getChrome } from './content/chrome'
 import { translations, type Locale } from './i18n'
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <div className="site-shell font-sans text-ink">
+      <ScrollProgress />
       <Nav chrome={chrome} locale={locale} onLocaleChange={setLocale} />
       <main>
         <Hero chrome={chrome} t={t} />

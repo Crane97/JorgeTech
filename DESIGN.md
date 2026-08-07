@@ -56,8 +56,8 @@ Theme lock: light only.
 - Experience timeline
 - Stack groups with mono chips
 - About editorial + boxing gallery
-- Resume document surface
-- Contact form (mailto bridge)
+- Resume open layout on the shared page background (titles + hairlines only)
+- Contact form (mailto bridge), no filled section panels
 
 ## Anti-patterns rejected
 

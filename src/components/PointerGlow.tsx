@@ -16,8 +16,8 @@ export function PointerGlow({ children }: { children: ReactNode }) {
   const x = useSpring(rawX, SPRING)
   const y = useSpring(rawY, SPRING)
   const background = useMotionTemplate`
-    radial-gradient(640px circle at ${x}px ${y}px, rgb(26 102 255 / 0.16), transparent 58%),
-    radial-gradient(980px circle at ${x}px ${y}px, rgb(11 15 23 / 0.045), transparent 62%)
+    radial-gradient(720px circle at ${x}px ${y}px, rgb(26 102 255 / 0.1), transparent 62%),
+    radial-gradient(1100px circle at ${x}px ${y}px, rgb(11 15 23 / 0.03), transparent 68%)
   `
 
   useEffect(() => {

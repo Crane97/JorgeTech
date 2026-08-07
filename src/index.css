@@ -57,9 +57,7 @@ body,
 }
 
 .site-shell {
-  background:
-    radial-gradient(1200px 600px at 85% -10%, rgb(26 102 255 / 0.05), transparent 55%),
-    var(--color-bg);
+  background: var(--color-bg);
 }
 
 /* Viewport-fixed so clientX/clientY track the cursor after scroll */
@@ -71,9 +69,7 @@ body,
 }
 
 .site-shell[data-reduced-motion='true'] {
-  background:
-    radial-gradient(700px circle at 70% 30%, rgb(26 102 255 / 0.1), transparent 60%),
-    var(--color-bg);
+  background: var(--color-bg);
 }
 
 /* Opaque media surfaces sit above the page glow so light never washes photos */

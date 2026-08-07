@@ -16,8 +16,8 @@ export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
         </Reveal>
 
         <Reveal>
-          <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-sm">
-            <div className="border-b border-line bg-bg/70 px-6 py-8 sm:px-10">
+          <div>
+            <div className="border-t border-line pt-8">
               <h3 className="text-2xl font-medium tracking-[-0.02em] text-ink sm:text-3xl">
                 {chrome.fullName}
               </h3>
@@ -26,8 +26,8 @@ export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
               </p>
             </div>
 
-            <div className="grid gap-0 lg:grid-cols-12">
-              <div className="border-b border-line px-6 py-10 sm:px-10 lg:col-span-7 lg:border-r lg:border-b-0">
+            <div className="mt-10 grid gap-12 border-t border-line pt-10 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-7">
                 <p className="mb-6 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
                   {chrome.experience.title}
                 </p>
@@ -51,7 +51,7 @@ export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
                 </ul>
               </div>
 
-              <div className="px-6 py-10 sm:px-10 lg:col-span-5">
+              <div className="lg:col-span-5">
                 <p className="mb-6 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
                   {chrome.resume.education}
                 </p>

@@ -34,7 +34,7 @@ export function TechStack({ chrome }: { chrome: Chrome }) {
                   {group.items.map((item) => (
                     <li
                       key={item}
-                      className="rounded-md bg-surface px-2.5 py-1.5 font-mono text-xs text-ink/85 ring-1 ring-line"
+                      className="rounded-md px-2.5 py-1.5 font-mono text-xs text-ink/85 ring-1 ring-line"
                     >
                       {item}
                     </li>

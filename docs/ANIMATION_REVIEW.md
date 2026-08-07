@@ -10,9 +10,12 @@
 | Nested modal choreography everywhere | On-page case studies; lightbox only for images | Occasional animation budget reserved for rare image focus |
 | Auto-playing photo marquee (boxing) | Static responsive gallery with lightbox | Continuous marquees compete with content; user controls inspection |
 
+| Document-tall glow via React state `%` | Fixed overlay + Motion spring on `clientX/Y` | Scroll no longer desyncs the glow; no full-tree re-render on pointermove |
+
 Kept on purpose:
 - Hero entrance stagger (once per visit)
 - Section reveal on scroll (storytelling hierarchy)
 - Media hover scale 1.02 (feedback that images are interactive)
 - Image crossfade ~700ms (media, not chrome)
+- Soft pointer glow (spring-driven, GPU background only; reduced when `prefers-reduced-motion`)
 - `prefers-reduced-motion` disables transforms

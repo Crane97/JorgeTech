@@ -28,12 +28,12 @@ export function Contact({ chrome, t }: { chrome: Chrome; t: Translation }) {
   }
 
   const fieldClass =
-    'w-full rounded-lg border border-line bg-bg px-4 py-3 text-base text-ink outline-none transition-colors duration-200 placeholder:text-muted/60 focus:border-accent'
+    'w-full rounded-lg border border-line bg-transparent px-4 py-3 text-base text-ink outline-none transition-colors duration-200 placeholder:text-muted/60 focus:border-accent'
 
   return (
     <section
       id="contact"
-      className="scroll-mt-24 border-t border-line px-5 py-24 sm:px-8 sm:py-32 lg:px-10"
+      className="scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32 lg:px-10"
     >
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-14 lg:grid-cols-12">
@@ -76,62 +76,57 @@ export function Contact({ chrome, t }: { chrome: Chrome; t: Translation }) {
           </Reveal>
 
           <Reveal className="lg:col-span-7" delay={0.06}>
-            <form
-              onSubmit={onSubmit}
-              className="rounded-2xl border border-line bg-bg p-6 shadow-sm sm:p-8"
-            >
-              <div className="flex flex-col gap-4">
-                <label className="flex flex-col gap-2">
-                  <span className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                    {t.contact.formName}
-                  </span>
-                  <input
-                    type="text"
-                    name="name"
-                    autoComplete="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className={fieldClass}
-                    required
-                  />
-                </label>
-                <label className="flex flex-col gap-2">
-                  <span className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                    {t.contact.formEmail}
-                  </span>
-                  <input
-                    type="email"
-                    name="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className={fieldClass}
-                    required
-                  />
-                </label>
-                <label className="flex flex-col gap-2">
-                  <span className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                    {t.contact.formMessage}
-                  </span>
-                  <textarea
-                    name="message"
-                    rows={5}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className={`${fieldClass} min-h-32 resize-y`}
-                    required
-                  />
-                </label>
-                <button
-                  type="submit"
-                  className="btn-press mt-2 inline-flex h-12 items-center justify-center rounded-lg bg-ink px-6 text-sm font-medium text-surface hover:bg-ink/90"
-                >
-                  {t.contact.formSubmit}
-                </button>
-                <p className="text-xs leading-relaxed text-muted">
-                  {t.contact.formHint}
-                </p>
-              </div>
+            <form onSubmit={onSubmit} className="flex flex-col gap-4">
+              <label className="flex flex-col gap-2">
+                <span className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+                  {t.contact.formName}
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  autoComplete="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={fieldClass}
+                  required
+                />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+                  {t.contact.formEmail}
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={fieldClass}
+                  required
+                />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+                  {t.contact.formMessage}
+                </span>
+                <textarea
+                  name="message"
+                  rows={5}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className={`${fieldClass} min-h-32 resize-y`}
+                  required
+                />
+              </label>
+              <button
+                type="submit"
+                className="btn-press mt-2 inline-flex h-12 items-center justify-center rounded-lg bg-ink px-6 text-sm font-medium text-surface hover:bg-ink/90"
+              >
+                {t.contact.formSubmit}
+              </button>
+              <p className="text-xs leading-relaxed text-muted">
+                {t.contact.formHint}
+              </p>
             </form>
           </Reveal>
         </div>

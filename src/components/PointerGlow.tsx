@@ -1,35 +1,53 @@
-import { useReducedMotion } from 'motion/react'
-import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from 'motion/react'
+import { useEffect, type ReactNode } from 'react'
+
+const SPRING = { stiffness: 160, damping: 28, mass: 0.35 }
 
 export function PointerGlow({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion()
-  const [pos, setPos] = useState({ x: 72, y: 28 })
+  const rawX = useMotionValue(0)
+  const rawY = useMotionValue(0)
+  const x = useSpring(rawX, SPRING)
+  const y = useSpring(rawY, SPRING)
+  const background = useMotionTemplate`
+    radial-gradient(720px circle at ${x}px ${y}px, rgb(26 102 255 / 0.1), transparent 62%),
+    radial-gradient(1100px circle at ${x}px ${y}px, rgb(11 15 23 / 0.03), transparent 68%)
+  `
 
   useEffect(() => {
     if (reduce) return
 
+    rawX.set(window.innerWidth * 0.72)
+    rawY.set(window.innerHeight * 0.28)
+
     const onMove = (e: PointerEvent) => {
-      const x = (e.clientX / window.innerWidth) * 100
-      const y = (e.clientY / window.innerHeight) * 100
-      setPos({ x, y })
+      rawX.set(e.clientX)
+      rawY.set(e.clientY)
     }
 
     window.addEventListener('pointermove', onMove, { passive: true })
     return () => window.removeEventListener('pointermove', onMove)
-  }, [reduce])
+  }, [reduce, rawX, rawY])
 
   return (
     <div
       className="site-shell font-sans text-ink"
-      style={
-        {
-          '--glow-x': `${pos.x}%`,
-          '--glow-y': `${pos.y}%`,
-        } as CSSProperties
-      }
       data-reduced-motion={reduce ? 'true' : 'false'}
     >
-      {children}
+      {!reduce ? (
+        <motion.div
+          aria-hidden
+          className="pointer-glow"
+          style={{ background }}
+        />
+      ) : null}
+      <div className="relative z-[1]">{children}</div>
     </div>
   )
 }

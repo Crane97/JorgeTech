@@ -55,7 +55,7 @@ Tinted slate, never pure black:
 
 ## Cards
 
-Default: none. Elevation only when a surface is interactive (case study media, form). Prefer hairlines + whitespace.
+Default: none. Elevation only when a surface is interactive (case study media). Sections share one page background; titles + spacing differentiate them — no alternating fills or section cards. Prefer hairlines + whitespace.
 
 ## Icons
 

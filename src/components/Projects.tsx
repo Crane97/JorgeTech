@@ -327,7 +327,7 @@ export function Projects({
 
                       {isOpen && study.architecture ? (
                         <CaseBlock label={chrome.projects.architecture}>
-                          <pre className="overflow-x-auto rounded-lg border border-line bg-bg p-4 font-mono text-xs leading-relaxed text-ink/80 whitespace-pre-wrap">
+                          <pre className="overflow-x-auto rounded-lg border border-line bg-transparent p-4 font-mono text-xs leading-relaxed text-ink/80 whitespace-pre-wrap">
                             {study.architecture}
                           </pre>
                         </CaseBlock>
@@ -342,7 +342,7 @@ export function Projects({
                             ).map((tech) => (
                               <li
                                 key={tech}
-                                className="rounded-md border border-line bg-surface px-2.5 py-1 font-mono text-[11px] text-ink/80"
+                                className="rounded-md border border-line px-2.5 py-1 font-mono text-[11px] text-ink/80"
                               >
                                 {tech}
                               </li>

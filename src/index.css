@@ -57,21 +57,17 @@ body,
 }
 
 .site-shell {
-  --glow-x: 72%;
-  --glow-y: 28%;
   background:
-    radial-gradient(
-      640px circle at var(--glow-x) var(--glow-y),
-      rgb(26 102 255 / 0.16),
-      transparent 58%
-    ),
-    radial-gradient(
-      980px circle at var(--glow-x) var(--glow-y),
-      rgb(11 15 23 / 0.045),
-      transparent 62%
-    ),
     radial-gradient(1200px 600px at 85% -10%, rgb(26 102 255 / 0.05), transparent 55%),
     var(--color-bg);
+}
+
+/* Viewport-fixed so clientX/clientY track the cursor after scroll */
+.pointer-glow {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
 }
 
 .site-shell[data-reduced-motion='true'] {

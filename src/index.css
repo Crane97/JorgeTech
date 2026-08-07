@@ -57,10 +57,33 @@ body,
 }
 
 .site-shell {
+  --glow-x: 72%;
+  --glow-y: 28%;
   background:
-    radial-gradient(1200px 600px at 85% -10%, rgb(26 102 255 / 0.08), transparent 55%),
-    radial-gradient(900px 500px at -10% 20%, rgb(11 15 23 / 0.04), transparent 50%),
+    radial-gradient(
+      640px circle at var(--glow-x) var(--glow-y),
+      rgb(26 102 255 / 0.16),
+      transparent 58%
+    ),
+    radial-gradient(
+      980px circle at var(--glow-x) var(--glow-y),
+      rgb(11 15 23 / 0.045),
+      transparent 62%
+    ),
+    radial-gradient(1200px 600px at 85% -10%, rgb(26 102 255 / 0.05), transparent 55%),
     var(--color-bg);
+}
+
+.site-shell[data-reduced-motion='true'] {
+  background:
+    radial-gradient(700px circle at 70% 30%, rgb(26 102 255 / 0.1), transparent 60%),
+    var(--color-bg);
+}
+
+/* Opaque media surfaces sit above the page glow so light never washes photos */
+.media-surface {
+  background: var(--color-surface);
+  isolation: isolate;
 }
 
 .hero-grid {

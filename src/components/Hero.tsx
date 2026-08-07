@@ -1,12 +1,5 @@
 import { ArrowRight } from 'lucide-react'
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-  useReducedMotion,
-} from 'motion/react'
-import { useRef } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import type { Chrome } from '../content/chrome'
 import type { Translation } from '../i18n'
 import { Magnetic } from './Magnetic'
@@ -15,56 +8,15 @@ const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1]
 
 export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
   const reduce = useReducedMotion()
-  const sectionRef = useRef<HTMLElement>(null)
-  const mouseX = useMotionValue(0.5)
-  const mouseY = useMotionValue(0.35)
-  const springX = useSpring(mouseX, { stiffness: 50, damping: 20, mass: 0.4 })
-  const springY = useSpring(mouseY, { stiffness: 50, damping: 20, mass: 0.4 })
-
-  const glow = useMotionTemplate`radial-gradient(620px circle at ${springX}% ${springY}%, rgb(26 102 255 / 0.18), transparent 58%)`
-  const glowSoft = useMotionTemplate`radial-gradient(900px circle at ${springX}% ${springY}%, rgb(11 15 23 / 0.05), transparent 60%)`
-
   const nameParts = chrome.brand.split(' ')
 
   return (
     <section
       id="top"
-      ref={sectionRef}
-      className="relative min-h-[100dvh] overflow-hidden bg-bg pt-16"
-      onPointerMove={(e) => {
-        if (reduce) return
-        const rect = sectionRef.current?.getBoundingClientRect()
-        if (!rect) return
-        mouseX.set(((e.clientX - rect.left) / rect.width) * 100)
-        mouseY.set(((e.clientY - rect.top) / rect.height) * 100)
-      }}
+      className="relative min-h-[100dvh] overflow-hidden pt-16"
     >
       <div className="hero-grid absolute inset-0 opacity-[0.55]" aria-hidden />
       <div className="hero-noise absolute inset-0 opacity-[0.35]" aria-hidden />
-
-      {!reduce ? (
-        <>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{ background: glow }}
-          />
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{ background: glowSoft }}
-          />
-        </>
-      ) : (
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'radial-gradient(700px circle at 70% 30%, rgb(26 102 255 / 0.14), transparent 60%)',
-          }}
-        />
-      )}
 
       <div
         aria-hidden

@@ -11,7 +11,7 @@ export function About({ chrome, t }: { chrome: Chrome; t: Translation }) {
   return (
     <section
       id="about"
-      className="scroll-mt-24 border-t border-line bg-surface px-5 py-24 sm:px-8 sm:py-32 lg:px-10"
+      className="scroll-mt-24 border-t border-line px-5 py-24 sm:px-8 sm:py-32 lg:px-10"
     >
       <div className="mx-auto max-w-[1400px]">
         <Reveal className="mb-12 max-w-2xl">
@@ -67,7 +67,7 @@ export function About({ chrome, t }: { chrome: Chrome; t: Translation }) {
                   key={src}
                   type="button"
                   onClick={() => setLightboxIndex(i)}
-                  className={`group overflow-hidden rounded-xl border border-line bg-bg ${
+                  className={`group media-surface overflow-hidden rounded-xl border border-line ${
                     i === 0 ? 'col-span-2 aspect-[16/10]' : 'aspect-square'
                   }`}
                 >

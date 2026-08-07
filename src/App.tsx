@@ -4,6 +4,7 @@ import { Contact } from './components/Contact'
 import { Experience } from './components/Experience'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
+import { PointerGlow } from './components/PointerGlow'
 import { Projects } from './components/Projects'
 import { Resume } from './components/Resume'
 import { ScrollProgress } from './components/ScrollProgress'
@@ -29,7 +30,7 @@ function App() {
   }, [locale])
 
   return (
-    <div className="site-shell font-sans text-ink">
+    <PointerGlow>
       <ScrollProgress />
       <Nav chrome={chrome} locale={locale} onLocaleChange={setLocale} />
       <main>
@@ -41,7 +42,7 @@ function App() {
         <Resume chrome={chrome} t={t} />
         <Contact chrome={chrome} t={t} />
       </main>
-    </div>
+    </PointerGlow>
   )
 }
 

@@ -33,7 +33,7 @@ export function Contact({ chrome, t }: { chrome: Chrome; t: Translation }) {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 border-t border-line bg-surface px-5 py-24 sm:px-8 sm:py-32 lg:px-10"
+      className="scroll-mt-24 border-t border-line px-5 py-24 sm:px-8 sm:py-32 lg:px-10"
     >
       <div className="mx-auto max-w-[1400px]">
         <div className="grid gap-14 lg:grid-cols-12">

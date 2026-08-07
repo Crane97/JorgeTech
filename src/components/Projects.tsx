@@ -16,7 +16,6 @@ import {
 import { Lightbox } from './Lightbox'
 import { ProjectCarousel } from './ProjectCarousel'
 import { Reveal } from './Reveal'
-import { SpotlightMedia } from './SpotlightMedia'
 
 type CaseStudy = {
   id: string
@@ -30,6 +29,7 @@ type CaseStudy = {
   results: string[]
   images: string[]
   stages?: { title: string; body: string }[]
+  note?: string
 }
 
 function buildCaseStudies(t: Translation, locale: Locale): CaseStudy[] {
@@ -157,6 +157,7 @@ function buildCaseStudies(t: Translation, locale: Locale): CaseStudy[] {
       technologies: [...sumero.technologies],
       results: includes ? [...includes, ...sumero.rules] : [...sumero.rules],
       images: SUMERO_IMAGES,
+      note: 'Rework UI 2026',
     }
   })
 }
@@ -225,7 +226,7 @@ export function Projects({
                     className={`lg:col-span-7 ${mediaLeft ? 'lg:order-1' : 'lg:order-2'}`}
                     delay={0.04}
                   >
-                    <SpotlightMedia className="group aspect-[16/10] overflow-hidden rounded-xl border border-line bg-surface shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-accent/30 hover:shadow-md">
+                    <div className="group media-surface aspect-[16/10] overflow-hidden rounded-xl border border-line shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-ink/20 hover:shadow-md">
                       {study.images.length > 0 ? (
                         study.images.length === 1 ? (
                           <button
@@ -267,7 +268,7 @@ export function Projects({
                           </p>
                         </div>
                       )}
-                    </SpotlightMedia>
+                    </div>
                   </Reveal>
 
                   <Reveal
@@ -284,6 +285,11 @@ export function Projects({
                         {study.year}
                       </time>
                     </div>
+                    {study.note ? (
+                      <p className="mb-3 font-mono text-[11px] tracking-[0.12em] text-ink/45 uppercase">
+                        {study.note}
+                      </p>
+                    ) : null}
                     {study.subtitle ? (
                       <p className="mb-6 text-[15px] leading-relaxed text-muted">
                         {study.subtitle}

@@ -353,7 +353,7 @@ export const translations = {
     hero: {
       line1: 'Ingeniero Informático',
       line2: 'Customer Success',
-      line3: 'Obsesionado por la IA',
+      line3: 'Apasionado por la IA',
       basedIn: 'Basado en',
       location: 'Miami, Florida',
     },

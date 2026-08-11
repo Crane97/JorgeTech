@@ -69,7 +69,7 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
             transition={{ duration: 0.45, delay: 0.32, ease: EASE_OUT }}
           >
             <Link
-              to="/#projects"
+              to="/projects"
               className="btn-apple inline-flex h-11 items-center gap-2 rounded-lg bg-ink px-5 text-sm font-medium text-surface"
             >
               {chrome.hero.ctaWork}

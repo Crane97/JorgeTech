@@ -99,9 +99,11 @@ export function Lightbox({
           transition={{ duration: 0.28, ease: EASE_OUT }}
         >
           <img
+            key={images[index]}
             src={images[index]}
-            alt={alt}
+            alt={`${alt} ${index + 1}`}
             className="max-h-full max-w-full rounded-xl object-contain shadow-md"
+            decoding="async"
           />
         </motion.div>
       </motion.div>

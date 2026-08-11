@@ -78,15 +78,17 @@ export function AboutPage({ chrome, t }: { chrome: Chrome; t: Translation }) {
                     key={src}
                     type="button"
                     onClick={() => setLightboxIndex(i)}
-                    className={`group media-surface overflow-hidden rounded-xl border border-line ${
+                    className={`group media-surface relative block w-full overflow-hidden rounded-xl border border-line ${
                       i === 0 ? 'col-span-2 aspect-[16/10]' : 'aspect-square'
                     }`}
                   >
                     <img
                       src={src}
                       alt={`${chrome.about.photos} ${i + 1}`}
-                      className="media-zoom h-full w-full object-cover"
-                      loading="lazy"
+                      className="media-zoom absolute inset-0 h-full w-full object-cover object-center"
+                      loading={i < 2 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      sizes={i === 0 ? '(min-width:1024px) 50vw, 100vw' : '(min-width:1024px) 25vw, 50vw'}
                     />
                   </button>
                 ))}

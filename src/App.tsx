@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { About } from './components/About'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { AboutPage } from './components/AboutPage'
 import { Contact } from './components/Contact'
-import { Experience } from './components/Experience'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
 import { PointerGlow } from './components/PointerGlow'
-import { Projects } from './components/Projects'
+import { ProjectsPage } from './components/ProjectsPage'
+import { ProjectsPreview } from './components/ProjectsPreview'
 import { Resume } from './components/Resume'
 import { ScrollProgress } from './components/ScrollProgress'
 import { TechStack } from './components/TechStack'
@@ -16,10 +17,42 @@ import { translations, type Locale } from './i18n'
  * THESIS: Prove engineering quality through product-grade clarity, not agency spectacle.
  * OWN-WORLD: Cold product light, Geist, ink/blue accent, case-study storytelling.
  * STORY: Visitor trusts Jorge can ship high-quality software in under 4 minutes.
- * FIRST VIEWPORT: Brand name + positioning + work/contact CTAs over portrait plane.
+ * FIRST VIEWPORT: Brand name + positioning headline + work/contact CTAs.
  * FORM: Canon craft bar (Stripe/Vercel/Linear/Notion/Raycast/Apple) executed straight.
  * FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
  */
+function HomePage({
+  chrome,
+  t,
+  locale,
+}: {
+  chrome: ReturnType<typeof getChrome>
+  t: (typeof translations)[Locale]
+  locale: Locale
+}) {
+  const location = useLocation()
+
+  useEffect(() => {
+    if (!location.hash) return
+    const id = location.hash.replace(/^#/, '')
+    const el = document.getElementById(id)
+    if (!el) return
+    requestAnimationFrame(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }, [location.pathname, location.hash])
+
+  return (
+    <main>
+      <Hero chrome={chrome} t={t} />
+      <ProjectsPreview chrome={chrome} t={t} locale={locale} />
+      <Resume chrome={chrome} t={t} />
+      <TechStack chrome={chrome} />
+      <Contact chrome={chrome} t={t} />
+    </main>
+  )
+}
+
 function App() {
   const [locale, setLocale] = useState<Locale>('en')
   const t = translations[locale]
@@ -30,19 +63,29 @@ function App() {
   }, [locale])
 
   return (
-    <PointerGlow>
-      <ScrollProgress />
-      <Nav chrome={chrome} locale={locale} onLocaleChange={setLocale} />
-      <main>
-        <Hero chrome={chrome} t={t} />
-        <Projects chrome={chrome} t={t} locale={locale} />
-        <Experience chrome={chrome} t={t} />
-        <TechStack chrome={chrome} />
-        <About chrome={chrome} t={t} />
-        <Resume chrome={chrome} t={t} />
-        <Contact chrome={chrome} t={t} />
-      </main>
-    </PointerGlow>
+    <BrowserRouter>
+      <PointerGlow>
+        <ScrollProgress />
+        <Nav chrome={chrome} locale={locale} onLocaleChange={setLocale} />
+        <Routes>
+          <Route
+            path="/"
+            element={<HomePage chrome={chrome} t={t} locale={locale} />}
+          />
+          <Route
+            path="/projects"
+            element={
+              <ProjectsPage chrome={chrome} t={t} locale={locale} />
+            }
+          />
+          <Route
+            path="/about"
+            element={<AboutPage chrome={chrome} t={t} />}
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </PointerGlow>
+    </BrowserRouter>
   )
 }
 

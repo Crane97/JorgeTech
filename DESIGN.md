@@ -52,7 +52,8 @@ Theme lock: light only.
 
 - Sticky product nav (single row)
 - Full-bleed portrait hero with readable scrim
-- On-page project case studies (Problem / Solution / Architecture / Technologies / Results)
+- Home: selected project preview (3 latest) with link to `/projects`
+- `/projects`: full case studies one-by-one (Problem / Solution / Architecture / Technologies / Results)
 - Experience timeline
 - Stack groups with mono chips
 - About editorial + boxing gallery

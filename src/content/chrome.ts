@@ -5,7 +5,6 @@ const en = {
   fullName: 'Jorge Ruiz de la Torre Bertolín',
   nav: {
     projects: 'Projects',
-    experience: 'Experience',
     stack: 'Stack',
     about: 'About',
     resume: 'Resume',
@@ -24,7 +23,9 @@ const en = {
   },
   projects: {
     title: 'Selected projects',
-    intro:
+    intro: 'A quick look at recent builds. Open the full archive for deeper case studies.',
+    pageTitle: 'All projects',
+    pageIntro:
       'Case studies from platforms I designed, built, and shipped. Real products, real constraints.',
     problem: 'Problem',
     solution: 'Solution',
@@ -37,10 +38,9 @@ const en = {
     nextImage: 'Next image',
     close: 'Close',
     viewCase: 'View case study',
-  },
-  experience: {
-    title: 'Professional experience',
-    intro: 'Roles where I shipped systems, supported customers, and improved quality with teams.',
+    viewAllProjects: 'View all projects',
+    backToHome: 'Back to home',
+    visitLive: 'Visit live site',
   },
   stack: {
     title: 'Technology stack',
@@ -57,10 +57,13 @@ const en = {
     title: 'About me',
     photos: 'Boxing',
     close: 'Close',
+    backToHome: 'Back to home',
   },
   resume: {
     title: 'Resume',
-    intro: 'A concise view of experience, education, and continuous learning.',
+    intro:
+      'Roles, education, and continuous learning — the full picture of how I build and ship.',
+    experience: 'Experience',
     education: 'Education',
     courses: 'Certifications & training',
     languages: 'Languages',
@@ -88,7 +91,6 @@ const es = {
   fullName: 'Jorge Ruiz de la Torre Bertolín',
   nav: {
     projects: 'Proyectos',
-    experience: 'Experiencia',
     stack: 'Stack',
     about: 'Sobre mí',
     resume: 'CV',
@@ -108,6 +110,9 @@ const es = {
   projects: {
     title: 'Proyectos seleccionados',
     intro:
+      'Un vistazo rápido a builds recientes. Abre el archivo completo para los casos de estudio.',
+    pageTitle: 'Todos los proyectos',
+    pageIntro:
       'Casos de estudio de plataformas que diseñé, construí y lancé. Productos reales, restricciones reales.',
     problem: 'Problema',
     solution: 'Solución',
@@ -120,11 +125,9 @@ const es = {
     nextImage: 'Imagen siguiente',
     close: 'Cerrar',
     viewCase: 'Ver caso de estudio',
-  },
-  experience: {
-    title: 'Experiencia profesional',
-    intro:
-      'Roles en los que entregué sistemas, apoyé a clientes y mejoré la calidad con equipos.',
+    viewAllProjects: 'Ver todos los proyectos',
+    backToHome: 'Volver al inicio',
+    visitLive: 'Visitar sitio',
   },
   stack: {
     title: 'Stack tecnológico',
@@ -141,10 +144,13 @@ const es = {
     title: 'Sobre mí',
     photos: 'Boxeo',
     close: 'Cerrar',
+    backToHome: 'Volver al inicio',
   },
   resume: {
     title: 'Currículum',
-    intro: 'Una vista concisa de experiencia, formación y aprendizaje continuo.',
+    intro:
+      'Roles, formación y aprendizaje continuo — la foto completa de cómo construyo y entrego.',
+    experience: 'Experiencia',
     education: 'Formación',
     courses: 'Certificaciones y cursos',
     languages: 'Idiomas',
@@ -172,7 +178,6 @@ const fr = {
   fullName: 'Jorge Ruiz de la Torre Bertolín',
   nav: {
     projects: 'Projets',
-    experience: 'Expérience',
     stack: 'Stack',
     about: 'À propos',
     resume: 'CV',
@@ -192,6 +197,9 @@ const fr = {
   projects: {
     title: 'Projets sélectionnés',
     intro:
+      'Un aperçu rapide des builds récents. Ouvrez l’archive complète pour les études de cas.',
+    pageTitle: 'Tous les projets',
+    pageIntro:
       'Études de cas de plateformes que j’ai conçues, construites et livrées. Vrais produits, vraies contraintes.',
     problem: 'Problème',
     solution: 'Solution',
@@ -204,11 +212,9 @@ const fr = {
     nextImage: 'Image suivante',
     close: 'Fermer',
     viewCase: 'Voir l’étude de cas',
-  },
-  experience: {
-    title: 'Expérience professionnelle',
-    intro:
-      'Des rôles où j’ai livré des systèmes, accompagné des clients et amélioré la qualité en équipe.',
+    viewAllProjects: 'Voir tous les projets',
+    backToHome: 'Retour à l’accueil',
+    visitLive: 'Voir le site',
   },
   stack: {
     title: 'Stack technologique',
@@ -225,10 +231,13 @@ const fr = {
     title: 'À propos',
     photos: 'Boxe',
     close: 'Fermer',
+    backToHome: 'Retour à l’accueil',
   },
   resume: {
     title: 'CV',
-    intro: 'Une vue concise de l’expérience, de la formation et de l’apprentissage continu.',
+    intro:
+      'Rôles, formation et apprentissage continu — le tableau complet de comment je construis et livre.',
+    experience: 'Expérience',
     education: 'Formation',
     courses: 'Certifications et cours',
     languages: 'Langues',

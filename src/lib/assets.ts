@@ -1,5 +1,11 @@
 import zumexScrapingImage from '../assets/scraping/3493f21e-c223-4bab-b5bf-15128c4e64e6.png'
 import logoMark from '../assets/logo/JRLogoBLK.png'
+import sumero01 from '../assets/sumeros/sumeros-01-inicio.jpg'
+import sumero02 from '../assets/sumeros/sumeros-02-partida.jpg'
+import sumero04 from '../assets/sumeros/sumeros-04-muy-dificil.jpg'
+import sumero05 from '../assets/sumeros/sumeros-05-resuelto.jpg'
+import sumero06 from '../assets/sumeros/sumeros-06-mobile-inicio.jpg'
+import sumero07 from '../assets/sumeros/sumeros-07-mobile-partida.jpg'
 
 const boxingImageModules = import.meta.glob<{ default: string }>(
   '../assets/boxing/*.{jpeg,jpg,png,webp}',
@@ -33,13 +39,14 @@ export const COWORKING_IMAGES = Object.keys(coworkingImageModules)
   .sort()
   .map((key) => coworkingImageModules[key].default)
 
-const sumeroImageModules = import.meta.glob<{ default: string }>(
-  '../assets/sumeros/*.{jpeg,jpg,png,webp}',
-  { eager: true },
-)
-export const SUMERO_IMAGES = Object.keys(sumeroImageModules)
-  .sort()
-  .map((key) => sumeroImageModules[key].default)
+export const SUMERO_IMAGES = [
+  sumero01,
+  sumero02,
+  sumero04,
+  sumero05,
+  sumero06,
+  sumero07,
+]
 
 export const ZUMEX_IMAGES = [zumexScrapingImage]
 export { logoMark }

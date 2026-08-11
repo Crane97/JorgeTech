@@ -20,7 +20,7 @@ The site is itself a portfolio piece: the quality of the interface demonstrates 
 
 ## Operating Context
 
-Single-page React + Vite portfolio with EN/ES/FR localization. Visitors scan hero positioning, selected project case studies, experience, technology stack, about, résumé summary, and contact. Projects already have detailed write-ups and screenshots in-repo.
+Single-page React + Vite portfolio with EN/ES/FR localization and a dedicated `/projects` archive. Visitors scan hero positioning, a short selected-projects preview, experience, technology stack, about, résumé summary, and contact. Full project case studies live on `/projects`. Projects already have detailed write-ups and screenshots in-repo.
 
 ## Capabilities and Constraints
 

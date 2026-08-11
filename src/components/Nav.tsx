@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
 import type { Locale } from '../i18n'
@@ -6,13 +7,12 @@ import type { Chrome } from '../content/chrome'
 import { logoMark } from '../lib/assets'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
-const LINKS = [
-  { id: 'projects', key: 'projects' as const },
-  { id: 'experience', key: 'experience' as const },
-  { id: 'stack', key: 'stack' as const },
-  { id: 'about', key: 'about' as const },
-  { id: 'resume', key: 'resume' as const },
-  { id: 'contact', key: 'contact' as const },
+const HOME_LINKS = [
+  { id: 'projects', key: 'projects' as const, to: '/#projects' },
+  { id: 'resume', key: 'resume' as const, to: '/#resume' },
+  { id: 'stack', key: 'stack' as const, to: '/#stack' },
+  { id: 'about', key: 'about' as const, to: '/about' },
+  { id: 'contact', key: 'contact' as const, to: '/#contact' },
 ]
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1]
@@ -29,6 +29,8 @@ export function Nav({
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const reduce = useReducedMotion()
+  const location = useLocation()
+  const onProjectsPage = location.pathname.startsWith('/projects')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -44,6 +46,12 @@ export function Nav({
     }
   }, [open])
 
+  useEffect(() => {
+    setOpen(false)
+  }, [location.pathname])
+
+  const projectsHref = onProjectsPage ? '/projects' : '/#projects'
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-200 ${
@@ -53,22 +61,22 @@ export function Nav({
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-10">
-        <a href="#top" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <img src={logoMark} alt="" className="h-7 w-7 object-contain" />
           <span className="text-sm font-medium tracking-tight text-ink sm:text-[15px]">
             {chrome.brand}
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-          {LINKS.map((link) => (
-            <a
+          {HOME_LINKS.map((link) => (
+            <Link
               key={link.id}
-              href={`#${link.id}`}
+              to={link.id === 'projects' ? projectsHref : link.to}
               className="text-sm text-ink/70 transition-colors duration-200 hover:text-ink"
             >
               {chrome.nav[link.key]}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -99,15 +107,15 @@ export function Nav({
               className="mx-auto flex max-w-[1400px] flex-col gap-1 px-5 py-4"
               aria-label="Mobile"
             >
-              {LINKS.map((link) => (
-                <a
+              {HOME_LINKS.map((link) => (
+                <Link
                   key={link.id}
-                  href={`#${link.id}`}
+                  to={link.id === 'projects' ? projectsHref : link.to}
                   onClick={() => setOpen(false)}
                   className="rounded-lg px-3 py-3 text-base text-ink transition-colors hover:bg-bg"
                 >
                   {chrome.nav[link.key]}
-                </a>
+                </Link>
               ))}
             </nav>
           </motion.div>

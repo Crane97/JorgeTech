@@ -39,6 +39,7 @@ export function ProjectCarousel({
             key={src}
             src={src}
             alt={i === index ? alt : ''}
+            loading={i === 0 ? 'eager' : 'lazy'}
             className={`media-zoom absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-700 ${
               i === index ? 'opacity-100' : 'opacity-0'
             }`}

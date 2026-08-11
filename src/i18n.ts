@@ -17,7 +17,7 @@ export const translations = {
     hero: {
       line1: 'Computer Engineer',
       line2: 'Customer Success',
-      line3: 'Obsessed by AI',
+      line3: 'Passionate by AI',
       basedIn: 'Based in',
       location: 'Miami, Florida',
     },
@@ -223,6 +223,28 @@ export const translations = {
             'The participant with the highest total score at the end of the tournament wins the family pool.',
         },
         {
+          id: 'sumero',
+          year: '2022',
+          title: 'Sumero Puzzle Generator',
+          subtitle:
+            'An algorithmic generator for creating valid Sumero puzzle boards.',
+          paragraphs: [
+            'This project was developed to automatically generate valid Sumero boards, a logic puzzle inspired by Sudoku where each cell contains three digits and one empty position, while rows and columns must satisfy specific sum constraints without repeating numbers.',
+            'Rather than solving existing puzzles, the application focuses on generating complete and valid game boards that can later be transformed into playable puzzles.',
+            'Once a valid solution was generated, an Excel automation transformed the completed board into a playable puzzle by automatically removing selected values and formatting the grid to resemble a numeric crossword.',
+            'The project combines constraint satisfaction, random search and validation algorithms to produce unique puzzle layouts.',
+          ],
+          includesTitle: 'Main Features',
+          includes: [
+            'Automatic generation of valid Sumero boards',
+            'Randomized solution generation',
+            'Row and column sum validation',
+            'Sudoku-like digit uniqueness constraints',
+            'Excel automation to generate playable puzzle layouts',
+            'Simple JavaFX interface to launch the generator',
+          ],
+        },
+        {
           id: 'worldcup-2022',
           year: '2022',
           title: 'World Cup Family Pool 2022',
@@ -249,28 +271,6 @@ export const translations = {
           ],
           scoringFooter:
             "Players accumulated points as teams progressed through the tournament, while the application also calculated each participant's maximum possible score, showing how many points they could still achieve.",
-        },
-        {
-          id: 'sumero',
-          year: '2022',
-          title: 'Sumero Puzzle Generator',
-          subtitle:
-            'An algorithmic generator for creating valid Sumero puzzle boards.',
-          paragraphs: [
-            'This project was developed to automatically generate valid Sumero boards, a logic puzzle inspired by Sudoku where each cell contains three digits and one empty position, while rows and columns must satisfy specific sum constraints without repeating numbers.',
-            'Rather than solving existing puzzles, the application focuses on generating complete and valid game boards that can later be transformed into playable puzzles.',
-            'Once a valid solution was generated, an Excel automation transformed the completed board into a playable puzzle by automatically removing selected values and formatting the grid to resemble a numeric crossword.',
-            'The project combines constraint satisfaction, random search and validation algorithms to produce unique puzzle layouts.',
-          ],
-          includesTitle: 'Main Features',
-          includes: [
-            'Automatic generation of valid Sumero boards',
-            'Randomized solution generation',
-            'Row and column sum validation',
-            'Sudoku-like digit uniqueness constraints',
-            'Excel automation to generate playable puzzle layouts',
-            'Simple JavaFX interface to launch the generator',
-          ],
         },
         {
           id: 'coworking',
@@ -568,6 +568,28 @@ export const translations = {
             'El participante con la puntuación total más alta al final del torneo gana la porra familiar.',
         },
         {
+          id: 'sumero',
+          year: '2022',
+          title: 'Generador de puzzles Sumero',
+          subtitle:
+            'Un generador algorítmico para crear tableros Sumero válidos.',
+          paragraphs: [
+            'Este proyecto se desarrolló para generar automáticamente tableros Sumero válidos, un puzzle lógico inspirado en el Sudoku donde cada celda contiene tres dígitos y una posición vacía, mientras que filas y columnas deben cumplir restricciones de suma específicas sin repetir números.',
+            'En lugar de resolver puzzles existentes, la aplicación se centra en generar tableros de juego completos y válidos que después pueden transformarse en puzzles jugables.',
+            'Una vez generada una solución válida, una automatización de Excel transformaba el tablero completo en un puzzle jugable eliminando automáticamente valores seleccionados y formateando la cuadrícula para que se asemejara a un crucigrama numérico.',
+            'El proyecto combina satisfacción de restricciones, búsqueda aleatoria y algoritmos de validación para producir layouts de puzzle únicos.',
+          ],
+          includesTitle: 'Funcionalidades principales',
+          includes: [
+            'Generación automática de tableros Sumero válidos',
+            'Generación aleatoria de soluciones',
+            'Validación de sumas por filas y columnas',
+            'Restricciones de unicidad de dígitos al estilo Sudoku',
+            'Automatización en Excel para generar puzzles jugables',
+            'Interfaz sencilla en JavaFX para lanzar el generador',
+          ],
+        },
+        {
           id: 'worldcup-2022',
           year: '2022',
           title: 'Porra familiar del Mundial 2022',
@@ -594,28 +616,6 @@ export const translations = {
           ],
           scoringFooter:
             'Los jugadores acumulaban puntos a medida que los equipos avanzaban en el torneo, y la aplicación también calculaba la puntuación máxima posible de cada participante, mostrando cuántos puntos podían alcanzar todavía.',
-        },
-        {
-          id: 'sumero',
-          year: '2022',
-          title: 'Generador de puzzles Sumero',
-          subtitle:
-            'Un generador algorítmico para crear tableros Sumero válidos.',
-          paragraphs: [
-            'Este proyecto se desarrolló para generar automáticamente tableros Sumero válidos, un puzzle lógico inspirado en el Sudoku donde cada celda contiene tres dígitos y una posición vacía, mientras que filas y columnas deben cumplir restricciones de suma específicas sin repetir números.',
-            'En lugar de resolver puzzles existentes, la aplicación se centra en generar tableros de juego completos y válidos que después pueden transformarse en puzzles jugables.',
-            'Una vez generada una solución válida, una automatización de Excel transformaba el tablero completo en un puzzle jugable eliminando automáticamente valores seleccionados y formateando la cuadrícula para que se asemejara a un crucigrama numérico.',
-            'El proyecto combina satisfacción de restricciones, búsqueda aleatoria y algoritmos de validación para producir layouts de puzzle únicos.',
-          ],
-          includesTitle: 'Funcionalidades principales',
-          includes: [
-            'Generación automática de tableros Sumero válidos',
-            'Generación aleatoria de soluciones',
-            'Validación de sumas por filas y columnas',
-            'Restricciones de unicidad de dígitos al estilo Sudoku',
-            'Automatización en Excel para generar puzzles jugables',
-            'Interfaz sencilla en JavaFX para lanzar el generador',
-          ],
         },
         {
           id: 'coworking',
@@ -915,6 +915,28 @@ export const translations = {
             'Le participant avec le score total le plus élevé à la fin du tournoi remporte le concours familial.',
         },
         {
+          id: 'sumero',
+          year: '2022',
+          title: 'Générateur de puzzles Sumero',
+          subtitle:
+            'Un générateur algorithmique pour créer des plateaux Sumero valides.',
+          paragraphs: [
+            'Ce projet a été développé pour générer automatiquement des plateaux Sumero valides, un puzzle logique inspiré du Sudoku où chaque cellule contient trois chiffres et une position vide, tandis que les lignes et colonnes doivent respecter des contraintes de somme spécifiques sans répéter les nombres.',
+            'Plutôt que de résoudre des puzzles existants, l’application se concentre sur la génération de plateaux de jeu complets et valides qui peuvent ensuite être transformés en puzzles jouables.',
+            'Une fois une solution valide générée, une automatisation Excel transformait le plateau complet en puzzle jouable en retirant automatiquement certaines valeurs et en formatant la grille pour qu’elle ressemble à un crossword numérique.',
+            'Le projet combine satisfaction de contraintes, recherche aléatoire et algorithmes de validation pour produire des layouts de puzzle uniques.',
+          ],
+          includesTitle: 'Fonctionnalités principales',
+          includes: [
+            'Génération automatique de plateaux Sumero valides',
+            'Génération aléatoire de solutions',
+            'Validation des sommes par lignes et colonnes',
+            'Contraintes d’unicité des chiffres de type Sudoku',
+            'Automatisation Excel pour générer des puzzles jouables',
+            'Interface JavaFX simple pour lancer le générateur',
+          ],
+        },
+        {
           id: 'worldcup-2022',
           year: '2022',
           title: 'Pronostics familiaux Coupe du Monde 2022',
@@ -941,28 +963,6 @@ export const translations = {
           ],
           scoringFooter:
             'Les joueurs accumulaient des points au fur et à mesure de la progression des équipes, tandis que l’application calculait aussi le score maximum possible de chaque participant, indiquant combien de points ils pouvaient encore atteindre.',
-        },
-        {
-          id: 'sumero',
-          year: '2022',
-          title: 'Générateur de puzzles Sumero',
-          subtitle:
-            'Un générateur algorithmique pour créer des plateaux Sumero valides.',
-          paragraphs: [
-            'Ce projet a été développé pour générer automatiquement des plateaux Sumero valides, un puzzle logique inspiré du Sudoku où chaque cellule contient trois chiffres et une position vide, tandis que les lignes et colonnes doivent respecter des contraintes de somme spécifiques sans répéter les nombres.',
-            'Plutôt que de résoudre des puzzles existants, l’application se concentre sur la génération de plateaux de jeu complets et valides qui peuvent ensuite être transformés en puzzles jouables.',
-            'Une fois une solution valide générée, une automatisation Excel transformait le plateau complet en puzzle jouable en retirant automatiquement certaines valeurs et en formatant la grille pour qu’elle ressemble à un crossword numérique.',
-            'Le projet combine satisfaction de contraintes, recherche aléatoire et algorithmes de validation pour produire des layouts de puzzle uniques.',
-          ],
-          includesTitle: 'Fonctionnalités principales',
-          includes: [
-            'Génération automatique de plateaux Sumero valides',
-            'Génération aléatoire de solutions',
-            'Validation des sommes par lignes et colonnes',
-            'Contraintes d’unicité des chiffres de type Sudoku',
-            'Automatisation Excel pour générer des puzzles jouables',
-            'Interface JavaFX simple pour lancer le générateur',
-          ],
         },
         {
           id: 'coworking',

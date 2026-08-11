@@ -77,6 +77,6 @@ Rules: animate only `transform`/`opacity`; honor `prefers-reduced-motion`; no ma
 
 1. One job per section
 2. Proof before biography
-3. Case studies over project cards
+3. Case studies over project cards — home shows a short selected preview; depth lives on `/projects`
 4. Scannable in under 4 minutes, deep on demand
 5. The UI is the sample of craft

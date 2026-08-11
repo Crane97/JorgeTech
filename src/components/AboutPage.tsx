@@ -5,6 +5,7 @@ import type { Chrome } from '../content/chrome'
 import type { Translation } from '../i18n'
 import { BOXING_IMAGES } from '../lib/assets'
 import { Lightbox } from './Lightbox'
+import { ProjectCarousel } from './ProjectCarousel'
 import { Reveal } from './Reveal'
 
 export function AboutPage({ chrome, t }: { chrome: Chrome; t: Translation }) {
@@ -34,87 +35,53 @@ export function AboutPage({ chrome, t }: { chrome: Chrome; t: Translation }) {
             </p>
           </Reveal>
 
-          <div className="grid gap-14 lg:grid-cols-12">
+          <Reveal>
+            <p className="mb-14 max-w-3xl text-base leading-relaxed text-ink/90 sm:text-lg">
+              {t.personal.story}
+            </p>
+          </Reveal>
+
+          <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-14">
             <Reveal className="lg:col-span-6">
-              <p className="text-base leading-relaxed text-ink/90 sm:text-lg">
-                {t.personal.story}
+              <p className="mb-3 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+                {t.about.postLabel}
               </p>
+              <p className="mb-6 text-sm text-muted">{t.about.postAttribution}</p>
+              <blockquote className="border-l-2 border-accent pl-5">
+                <div className="flex flex-col gap-5">
+                  {t.about.paragraphs.map((paragraph) => (
+                    <p
+                      key={paragraph.slice(0, 48)}
+                      className="text-[15px] leading-relaxed text-ink/85"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
 
-              <div className="mt-12">
-                <p className="mb-3 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                  {t.about.postLabel}
-                </p>
-                <p className="mb-6 text-sm text-muted">{t.about.postAttribution}</p>
-                <blockquote className="border-l-2 border-accent pl-5">
-                  <div className="flex flex-col gap-5">
-                    {t.about.paragraphs.map((paragraph) => (
-                      <p
-                        key={paragraph.slice(0, 48)}
-                        className="text-[15px] leading-relaxed text-ink/85"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                  <footer className="mt-6 text-sm text-muted">
-                    - Jorge Ruiz de la Torre
-                  </footer>
-                </blockquote>
-
-                <blockquote className="mt-10 border-l border-line pl-5 text-lg leading-relaxed text-muted">
+                <blockquote className="mt-8 border-l border-line pl-4 text-base leading-relaxed text-muted">
                   {t.about.quote}
                 </blockquote>
                 <p className="mt-3 text-sm text-muted">- {t.about.quoteAuthor}</p>
-              </div>
+
+                <footer className="mt-8 text-sm text-muted">
+                  - Jorge Ruiz de la Torre
+                </footer>
+              </blockquote>
             </Reveal>
 
-            <Reveal className="lg:col-span-6" delay={0.08}>
-              <p className="mb-5 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+            <Reveal className="lg:col-span-6" delay={0.06}>
+              <p className="mb-4 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
                 {chrome.about.photos}
               </p>
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {BOXING_IMAGES.slice(0, 6).map((src, i) => (
-                  <button
-                    key={src}
-                    type="button"
-                    onClick={() => setLightboxIndex(i)}
-                    className={`group media-surface relative block w-full overflow-hidden rounded-xl border border-line ${
-                      i === 0 ? 'col-span-2 aspect-[16/10]' : 'aspect-square'
-                    }`}
-                  >
-                    <img
-                      src={src}
-                      alt={`${chrome.about.photos} ${i + 1}`}
-                      className="media-zoom absolute inset-0 h-full w-full object-cover object-center"
-                      loading={i < 2 ? 'eager' : 'lazy'}
-                      decoding="async"
-                      sizes={i === 0 ? '(min-width:1024px) 50vw, 100vw' : '(min-width:1024px) 25vw, 50vw'}
-                    />
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-10 grid gap-8 sm:grid-cols-2">
-                <div>
-                  <p className="mb-3 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                    {t.about.sportsEyebrow}
-                  </p>
-                  <ul className="space-y-2 text-sm leading-relaxed text-ink/85">
-                    {t.about.sports.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <p className="mb-3 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                    {t.about.businessEyebrow}
-                  </p>
-                  <ul className="space-y-2 text-sm leading-relaxed text-ink/85">
-                    {t.about.business.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="media-surface sticky top-24 aspect-[4/5] overflow-hidden rounded-xl border border-line shadow-sm sm:aspect-[5/6] lg:aspect-[4/5]">
+                <ProjectCarousel
+                  images={BOXING_IMAGES}
+                  alt={chrome.about.photos}
+                  expandLabel={chrome.projects.expandImage}
+                  objectPosition="object-center"
+                  onExpand={(imageIndex) => setLightboxIndex(imageIndex)}
+                />
               </div>
             </Reveal>
           </div>

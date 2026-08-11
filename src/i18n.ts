@@ -320,14 +320,6 @@ export const translations = {
         'The only fighter who fights with confidence is the one who has seen his own blood, been knocked down and beaten in body, but not in spirit. The one who, as many times as he falls, stands up again — more defiant than ever.',
       quoteAuthor: 'Seneca',
       photosEyebrow: 'Boxing',
-      sportsEyebrow: 'Sports references',
-      sports: [
-        'Athletes and coaches who treat preparation as a craft — consistency over noise.',
-      ],
-      businessEyebrow: 'Business references',
-      business: [
-        'Builders and operators who combine long-term vision with sharp execution.',
-      ],
     },
     personal: {
       eyebrow: 'Personal',
@@ -666,14 +658,6 @@ export const translations = {
         'El único luchador que pelea con confianza es el que ha visto su propia sangre y ha sido tirado y golpeado de cuerpo, pero no de espíritu. El que tantas veces como se cae se vuelve a levantar, más desafiante que nunca.',
       quoteAuthor: 'Séneca',
       photosEyebrow: 'Boxeo',
-      sportsEyebrow: 'Referentes en el deporte',
-      sports: [
-        'Atletas y entrenadores que tratan la preparación como un oficio — constancia por encima del ruido.',
-      ],
-      businessEyebrow: 'Referentes en los negocios',
-      business: [
-        'Constructores y operadores que combinan visión a largo plazo con ejecución precisa.',
-      ],
     },
     personal: {
       eyebrow: 'Personal',
@@ -1013,14 +997,6 @@ export const translations = {
         'Le seul combattant qui se bat avec confiance est celui qui a vu son propre sang, qui a été terrassé et frappé dans son corps, mais pas dans son esprit. Celui qui, autant de fois qu’il tombe, se relève — plus défiant que jamais.',
       quoteAuthor: 'Sénèque',
       photosEyebrow: 'Boxe',
-      sportsEyebrow: 'Références sportives',
-      sports: [
-        'Athlètes et coachs qui traitent la préparation comme un métier — la constance plutôt que le bruit.',
-      ],
-      businessEyebrow: 'Références business',
-      business: [
-        'Bâtisseurs et opérateurs qui allient vision long terme et exécution précise.',
-      ],
     },
     personal: {
       eyebrow: 'Personnel',

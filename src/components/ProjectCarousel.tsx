@@ -5,11 +5,13 @@ export function ProjectCarousel({
   alt,
   expandLabel,
   onExpand,
+  objectPosition = 'object-top',
 }: {
   images: string[]
   alt: string
   expandLabel: string
   onExpand: (index: number) => void
+  objectPosition?: 'object-top' | 'object-center'
 }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -21,6 +23,9 @@ export function ProjectCarousel({
     }, 4200)
     return () => window.clearInterval(id)
   }, [images.length, paused])
+
+  const fitClass =
+    objectPosition === 'object-center' ? 'object-center' : 'object-top'
 
   return (
     <div
@@ -40,7 +45,7 @@ export function ProjectCarousel({
             src={src}
             alt={i === index ? alt : ''}
             loading={i === 0 ? 'eager' : 'lazy'}
-            className={`media-zoom absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-700 ${
+            className={`media-zoom absolute inset-0 h-full w-full object-cover ${fitClass} transition-opacity duration-700 ${
               i === index ? 'opacity-100' : 'opacity-0'
             }`}
           />

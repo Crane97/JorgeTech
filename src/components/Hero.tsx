@@ -70,12 +70,12 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
   }, [reduce])
 
   const mediaClass =
-    'h-full w-full object-contain object-[center_bottom] lg:object-[left_center]'
+    'h-full w-full object-contain object-bottom lg:object-[left_center]'
 
   return (
     <div
       ref={hostRef}
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden max-lg:top-[62%]"
+      className="pointer-events-none z-0 overflow-hidden max-lg:relative max-lg:mt-4 max-lg:h-[min(38dvh,280px)] max-lg:w-full max-lg:shrink-0 lg:absolute lg:inset-0"
       aria-hidden
     >
       {reduce ? (
@@ -106,11 +106,9 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
   return (
     <section
       id="top"
-      className="relative isolate min-h-[100dvh] overflow-hidden pt-16"
+      className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden pt-16"
     >
-      <HeroComic reduce={reduce} />
-
-      <div className="relative z-20 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-[1400px] items-center px-5 py-16 sm:px-8 lg:px-10 lg:py-20">
+      <div className="relative z-20 mx-auto flex w-full max-w-[1400px] flex-1 items-start px-5 pt-10 pb-4 sm:px-8 lg:min-h-[calc(100dvh-4rem)] lg:items-center lg:px-10 lg:py-20">
         <div className="max-w-3xl">
           <motion.p
             className="mb-6 font-mono text-xs tracking-[0.14em] text-ink/75 uppercase"
@@ -179,7 +177,7 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
           </motion.div>
 
           <motion.p
-            className="mt-12 font-mono text-xs tracking-wide text-ink/70"
+            className="mt-8 font-mono text-xs tracking-wide text-ink/70 lg:mt-12"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.4, ease: EASE_OUT }}
@@ -188,6 +186,8 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
           </motion.p>
         </div>
       </div>
+
+      <HeroComic reduce={reduce} />
     </section>
   )
 }

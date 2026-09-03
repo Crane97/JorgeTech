@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AboutPage } from './components/AboutPage'
 import { Contact } from './components/Contact'
@@ -21,6 +21,31 @@ import { translations, type Locale } from './i18n'
  * FORM: Canon craft bar (Stripe/Vercel/Linear/Notion/Raycast/Apple) executed straight.
  * FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
  */
+function AppShell({
+  chrome,
+  locale,
+  onLocaleChange,
+  children,
+}: {
+  chrome: ReturnType<typeof getChrome>
+  locale: Locale
+  onLocaleChange: (locale: Locale) => void
+  children: ReactNode
+}) {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
+
+  return (
+    <PointerGlow>
+      <ScrollProgress />
+      {!isHome ? (
+        <Nav chrome={chrome} locale={locale} onLocaleChange={onLocaleChange} />
+      ) : null}
+      {children}
+    </PointerGlow>
+  )
+}
+
 function HomePage({
   chrome,
   t,
@@ -44,7 +69,7 @@ function HomePage({
 
   return (
     <main>
-      <Hero chrome={chrome} t={t} />
+      <Hero />
       <ProjectsPreview chrome={chrome} t={t} locale={locale} />
       <Resume chrome={chrome} t={t} />
       <TechStack chrome={chrome} />
@@ -64,9 +89,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <PointerGlow>
-        <ScrollProgress />
-        <Nav chrome={chrome} locale={locale} onLocaleChange={setLocale} />
+      <AppShell chrome={chrome} locale={locale} onLocaleChange={setLocale}>
         <Routes>
           <Route
             path="/"
@@ -84,7 +107,7 @@ function App() {
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </PointerGlow>
+      </AppShell>
     </BrowserRouter>
   )
 }

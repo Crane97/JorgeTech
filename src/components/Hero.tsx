@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Chrome } from '../content/chrome'
 import type { Translation } from '../i18n'
@@ -20,14 +20,15 @@ function isAppleWebKit() {
   return iOS || iPadOS || safari
 }
 
-function pickHeroSrc() {
-  // Safari/iOS often reports canPlayType("maybe") for WebM, then fails to
-  // decode it and leaves the poster up as a still. Always give them H.264.
-  if (isAppleWebKit()) return HERO_MP4
+function pickHeroSource() {
+  // Safari/iOS cannot decode VP8 alpha. H.264 has no alpha either, so the MP4
+  // is flattened on white and knocked out with mix-blend-mode: multiply.
+  if (isAppleWebKit()) return { src: HERO_MP4, knockout: true }
   const probe = document.createElement('video')
-  return probe.canPlayType('video/webm; codecs="vp8"') === 'probably'
-    ? HERO_WEBM
-    : HERO_MP4
+  if (probe.canPlayType('video/webm; codecs="vp8"') === 'probably') {
+    return { src: HERO_WEBM, knockout: false }
+  }
+  return { src: HERO_MP4, knockout: true }
 }
 
 function armInlinePlayback(video: HTMLVideoElement) {
@@ -42,6 +43,8 @@ function armInlinePlayback(video: HTMLVideoElement) {
 function HeroComic({ reduce }: { reduce: boolean | null }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const hostRef = useRef<HTMLDivElement>(null)
+  const [knockout, setKnockout] = useState(false)
+  const [live, setLive] = useState(false)
 
   useEffect(() => {
     if (reduce) return
@@ -54,8 +57,10 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
     let holding = false
     let holdTimer = 0
 
+    const source = pickHeroSource()
+    setKnockout(source.knockout)
     armInlinePlayback(video)
-    video.src = pickHeroSrc()
+    video.src = source.src
     video.load()
 
     const tryPlay = () => {
@@ -98,8 +103,13 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
       if (document.visibilityState === 'visible') tryPlay()
     }
 
+    const onPlaying = () => {
+      setLive(true)
+    }
+
     video.addEventListener('ended', onEnded)
     video.addEventListener('canplay', tryPlay)
+    video.addEventListener('playing', onPlaying)
     window.addEventListener('touchstart', unlock, { passive: true })
     window.addEventListener('pointerdown', unlock)
     document.addEventListener('visibilitychange', onVisibility)
@@ -128,6 +138,7 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
       window.clearTimeout(holdTimer)
       video.removeEventListener('ended', onEnded)
       video.removeEventListener('canplay', tryPlay)
+      video.removeEventListener('playing', onPlaying)
       window.removeEventListener('touchstart', unlock)
       window.removeEventListener('pointerdown', unlock)
       document.removeEventListener('visibilitychange', onVisibility)
@@ -136,7 +147,7 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
     }
   }, [reduce])
 
-  const mediaClass = 'h-full w-full object-contain object-bottom'
+  const mediaClass = 'absolute inset-0 h-full w-full object-contain object-bottom'
 
   return (
     <div
@@ -147,19 +158,29 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
       {reduce ? (
         <img src={HERO_POSTER} alt="" className={mediaClass} />
       ) : (
-        <video
-          ref={videoRef}
-          className={mediaClass}
-          autoPlay
-          muted
-          playsInline
-          loop={false}
-          preload="auto"
-          poster={HERO_POSTER}
-          controls={false}
-          disablePictureInPicture
-          disableRemotePlayback
-        />
+        <>
+          <div
+            className={`absolute inset-0 ${knockout ? 'mix-blend-multiply' : ''} ${live ? '' : 'opacity-0'}`}
+          >
+            <video
+              ref={videoRef}
+              className={mediaClass}
+              autoPlay
+              muted
+              playsInline
+              loop={false}
+              preload="auto"
+              controls={false}
+              disablePictureInPicture
+              disableRemotePlayback
+            />
+          </div>
+          <img
+            src={HERO_POSTER}
+            alt=""
+            className={`${mediaClass} ${live ? 'hidden' : ''}`}
+          />
+        </>
       )}
     </div>
   )
@@ -172,7 +193,7 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
   return (
     <section
       id="top"
-      className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden pt-16"
+      className="relative flex min-h-[100dvh] flex-col overflow-hidden pt-16"
     >
       <div className="relative z-20 mx-auto flex w-full max-w-[1400px] items-start px-5 pb-3 sm:px-8 lg:flex-1 lg:px-10 lg:pb-8 pt-[max(1.25rem,calc(14dvh-4rem))] lg:pt-[max(1.5rem,calc(16dvh-4rem))]">
         <div className="max-w-3xl">

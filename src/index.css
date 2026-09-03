@@ -73,12 +73,11 @@ body,
 }
 
 /*
-  Hero comic: only the top 30% of the clip may meet the titles.
-  The clip is bottom-anchored so the remaining 70% sits below the name.
+  Hero comic: full-bleed width. Only the top 30% of the clip may meet the titles.
+  Bottom-anchored so the remaining 70% sits below the name.
 */
 .hero-comic {
   --hero-title-overlap: 30%;
-  --hero-body-clear: calc(100% - 48%);
 }
 
 @media (min-width: 1024px) {
@@ -87,17 +86,9 @@ body,
     inset-inline: 0;
     bottom: 0;
     top: auto;
-    height: 48%;
+    width: 100%;
+    height: 58%;
   }
-}
-
-.hero-copy-scrim {
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--color-bg) 94%, transparent) 0%,
-    color-mix(in srgb, var(--color-bg) 82%, transparent) 58%,
-    transparent 100%
-  );
 }
 
 /* Opaque media surfaces sit above the page glow so light never washes photos */

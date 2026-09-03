@@ -23,7 +23,7 @@ function HeroMark({ reduce }: { reduce: boolean | null }) {
   }, [reduce])
 
   const mediaClass =
-    'h-auto w-full max-h-[min(42vh,320px)] object-contain object-center mix-blend-multiply lg:max-h-[min(70vh,560px)]'
+    'h-auto w-full max-h-[min(42vh,320px)] object-contain object-center lg:max-h-[min(70vh,560px)]'
 
   if (reduce) {
     return <img src={heroMarkPoster} alt="" className={mediaClass} />

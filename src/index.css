@@ -78,7 +78,7 @@ body,
 */
 .hero-comic {
   --hero-title-overlap: 30%;
-  --hero-body-clear: calc(100% - 62%);
+  --hero-body-clear: calc(100% - 48%);
 }
 
 @media (min-width: 1024px) {
@@ -87,7 +87,7 @@ body,
     inset-inline: 0;
     bottom: 0;
     top: auto;
-    height: 62%;
+    height: 48%;
   }
 }
 

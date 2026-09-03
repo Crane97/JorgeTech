@@ -70,12 +70,12 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
   }, [reduce])
 
   const mediaClass =
-    'h-full w-full object-contain object-center lg:object-[70%_center]'
+    'h-full w-full object-contain object-[center_bottom] lg:object-[left_center]'
 
   return (
     <div
       ref={hostRef}
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden max-lg:top-[46%] lg:inset-y-0 lg:right-0 lg:left-[36%]"
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden max-lg:top-[62%]"
       aria-hidden
     >
       {reduce ? (

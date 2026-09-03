@@ -75,7 +75,7 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
   return (
     <div
       ref={hostRef}
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden max-lg:top-[46%] lg:inset-y-0 lg:right-0 lg:left-[36%]"
       aria-hidden
     >
       {reduce ? (
@@ -106,11 +106,11 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
   return (
     <section
       id="top"
-      className="relative min-h-[100dvh] overflow-hidden pt-16"
+      className="relative isolate min-h-[100dvh] overflow-hidden pt-16"
     >
       <HeroComic reduce={reduce} />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-[1400px] items-center px-5 py-16 sm:px-8 lg:px-10 lg:py-20">
+      <div className="relative z-20 mx-auto flex min-h-[calc(100dvh-4rem)] max-w-[1400px] items-center px-5 py-16 sm:px-8 lg:px-10 lg:py-20">
         <div className="max-w-3xl">
           <motion.p
             className="mb-6 font-mono text-xs tracking-[0.14em] text-ink/75 uppercase"

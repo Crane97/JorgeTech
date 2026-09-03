@@ -72,6 +72,18 @@ body,
   background: var(--color-bg);
 }
 
+/*
+  Hero comic: full-bleed width, uncropped 16:9.
+  Height follows the clip; if the viewport is shorter, contain (never cover).
+*/
+.hero-comic {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  width: 100%;
+  height: min(56.25vw, 100%);
+}
+
 /* Opaque media surfaces sit above the page glow so light never washes photos */
 .media-surface {
   background: var(--color-surface);

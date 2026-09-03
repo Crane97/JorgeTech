@@ -11,6 +11,34 @@ const HERO_WEBM = '/videoHero/hero.webm'
 const HERO_MP4 = '/videoHero/hero.mp4'
 const HERO_POSTER = '/videoHero/hero-poster.png'
 
+function isAppleWebKit() {
+  const ua = navigator.userAgent
+  const iOS = /iPad|iPhone|iPod/.test(ua)
+  const iPadOS = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1
+  const safari =
+    /Safari/i.test(ua) && !/Chrome|Chromium|CriOS|FxiOS|EdgiOS|Android/i.test(ua)
+  return iOS || iPadOS || safari
+}
+
+function pickHeroSrc() {
+  // Safari/iOS often reports canPlayType("maybe") for WebM, then fails to
+  // decode it and leaves the poster up as a still. Always give them H.264.
+  if (isAppleWebKit()) return HERO_MP4
+  const probe = document.createElement('video')
+  return probe.canPlayType('video/webm; codecs="vp8"') === 'probably'
+    ? HERO_WEBM
+    : HERO_MP4
+}
+
+function armInlinePlayback(video: HTMLVideoElement) {
+  video.muted = true
+  video.defaultMuted = true
+  video.playsInline = true
+  video.setAttribute('muted', '')
+  video.setAttribute('playsinline', '')
+  video.setAttribute('webkit-playsinline', 'true')
+}
+
 function HeroComic({ reduce }: { reduce: boolean | null }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const hostRef = useRef<HTMLDivElement>(null)
@@ -23,47 +51,86 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
 
     let cancelled = false
     let inView = true
+    let holding = false
     let holdTimer = 0
 
-    const playBoomerang = () => {
-      if (cancelled || !inView) return
-      video.currentTime = 0
+    armInlinePlayback(video)
+    video.src = pickHeroSrc()
+    video.load()
+
+    const tryPlay = () => {
+      if (cancelled || !inView || holding) return
+      armInlinePlayback(video)
       void video.play().catch(() => {
-        /* Keep the poster if autoplay is blocked. */
+        /* Low Power Mode / autoplay policy: retry on the next gesture. */
       })
+    }
+
+    const playFromStart = () => {
+      if (cancelled || !inView || holding) return
+      armInlinePlayback(video)
+      if (video.readyState >= 1 && video.currentTime > 0.04) {
+        try {
+          video.currentTime = 0
+        } catch {
+          /* iOS throws if metadata is not ready. */
+        }
+      }
+      tryPlay()
     }
 
     const onEnded = () => {
       if (cancelled) return
+      holding = true
       video.pause()
-      video.currentTime = 0
       window.clearTimeout(holdTimer)
       holdTimer = window.setTimeout(() => {
-        playBoomerang()
+        holding = false
+        playFromStart()
       }, HOLD_MS)
     }
 
+    const unlock = () => {
+      tryPlay()
+    }
+
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') tryPlay()
+    }
+
     video.addEventListener('ended', onEnded)
+    video.addEventListener('canplay', tryPlay)
+    window.addEventListener('touchstart', unlock, { passive: true })
+    window.addEventListener('pointerdown', unlock)
+    document.addEventListener('visibilitychange', onVisibility)
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        inView = entry.isIntersecting
+        const rect = entry.boundingClientRect
+        const onScreen =
+          rect.bottom > 40 && rect.top < (window.innerHeight || 0) - 40
+        inView = (entry.isIntersecting && entry.intersectionRatio > 0) || onScreen
         if (!inView) {
           video.pause()
           window.clearTimeout(holdTimer)
+          holding = false
           return
         }
-        playBoomerang()
+        tryPlay()
       },
-      { threshold: 0.2 },
+      { threshold: [0, 0.01, 0.2], rootMargin: '120px 0px' },
     )
     io.observe(host)
-    playBoomerang()
+    tryPlay()
 
     return () => {
       cancelled = true
       window.clearTimeout(holdTimer)
       video.removeEventListener('ended', onEnded)
+      video.removeEventListener('canplay', tryPlay)
+      window.removeEventListener('touchstart', unlock)
+      window.removeEventListener('pointerdown', unlock)
+      document.removeEventListener('visibilitychange', onVisibility)
       io.disconnect()
       video.pause()
     }
@@ -83,16 +150,16 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
         <video
           ref={videoRef}
           className={mediaClass}
+          autoPlay
           muted
           playsInline
+          loop={false}
           preload="auto"
           poster={HERO_POSTER}
+          controls={false}
           disablePictureInPicture
           disableRemotePlayback
-        >
-          <source src={HERO_WEBM} type="video/webm" />
-          <source src={HERO_MP4} type="video/mp4" />
-        </video>
+        />
       )}
     </div>
   )

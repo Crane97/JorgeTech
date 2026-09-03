@@ -69,7 +69,7 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
     }
   }, [reduce])
 
-  const mediaClass = 'h-full w-full object-cover object-bottom lg:object-[left_bottom]'
+  const mediaClass = 'h-full w-full object-contain object-bottom'
 
   return (
     <div
@@ -107,7 +107,7 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
       id="top"
       className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden pt-16"
     >
-      <div className="relative z-20 mx-auto flex w-full max-w-[1400px] items-start px-5 pb-3 sm:px-8 lg:flex-1 lg:px-10 lg:pb-8 pt-[max(1.5rem,calc(32dvh-4rem))]">
+      <div className="relative z-20 mx-auto flex w-full max-w-[1400px] items-start px-5 pb-3 sm:px-8 lg:flex-1 lg:px-10 lg:pb-8 pt-[max(1.25rem,calc(18dvh-4rem))] lg:pt-[max(1.5rem,calc(20dvh-4rem))]">
         <div className="max-w-3xl">
           <motion.p
             className="mb-5 font-mono text-xs tracking-[0.14em] text-ink/75 uppercase lg:mb-6"

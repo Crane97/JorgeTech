@@ -73,22 +73,15 @@ body,
 }
 
 /*
-  Hero comic: full-bleed width. Only the top 30% of the clip may meet the titles.
-  Bottom-anchored so the remaining 70% sits below the name.
+  Hero comic: full-bleed width, uncropped 16:9.
+  Height follows the clip; if the viewport is shorter, contain (never cover).
 */
 .hero-comic {
-  --hero-title-overlap: 30%;
   position: absolute;
   inset-inline: 0;
   bottom: 0;
   width: 100%;
-  height: 50%;
-}
-
-@media (min-width: 1024px) {
-  .hero-comic {
-    height: 58%;
-  }
+  height: min(56.25vw, 100%);
 }
 
 /* Opaque media surfaces sit above the page glow so light never washes photos */

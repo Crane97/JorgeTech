@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Chrome } from '../content/chrome'
 import type { Translation } from '../i18n'
+import { startHeroKnockout } from '../lib/heroKnockout'
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1]
 const HOLD_MS = 5000
@@ -20,10 +21,20 @@ function isAppleWebKit() {
   return iOS || iPadOS || safari
 }
 
+function forceSafariPath() {
+  try {
+    return new URLSearchParams(window.location.search).has('heroKnockout')
+  } catch {
+    return false
+  }
+}
+
 function pickHeroSource() {
-  // Safari/iOS cannot decode VP8 alpha. H.264 has no alpha either, so the MP4
-  // is flattened on white and knocked out with mix-blend-mode: multiply.
-  if (isAppleWebKit()) return { src: HERO_MP4, knockout: true }
+  // Safari/iOS cannot decode VP8 alpha, and its video plane ignores CSS blend
+  // modes. Serve H.264 and punch the white paper out in WebGL/canvas.
+  if (isAppleWebKit() || forceSafariPath()) {
+    return { src: HERO_MP4, knockout: true }
+  }
   const probe = document.createElement('video')
   if (probe.canPlayType('video/webm; codecs="vp8"') === 'probably') {
     return { src: HERO_WEBM, knockout: false }
@@ -42,26 +53,32 @@ function armInlinePlayback(video: HTMLVideoElement) {
 
 function HeroComic({ reduce }: { reduce: boolean | null }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const hostRef = useRef<HTMLDivElement>(null)
-  const [knockout, setKnockout] = useState(false)
+  const [knockout, setKnockout] = useState(() => pickHeroSource().knockout)
   const [live, setLive] = useState(false)
 
   useEffect(() => {
     if (reduce) return
     const video = videoRef.current
     const host = hostRef.current
+    const canvas = canvasRef.current
     if (!video || !host) return
 
     let cancelled = false
     let inView = true
     let holding = false
     let holdTimer = 0
+    let stopKnockout = () => {}
 
     const source = pickHeroSource()
     setKnockout(source.knockout)
     armInlinePlayback(video)
     video.src = source.src
     video.load()
+    if (source.knockout && canvas) {
+      stopKnockout = startHeroKnockout(video, canvas, host)
+    }
 
     const tryPlay = () => {
       if (cancelled || !inView || holding) return
@@ -143,6 +160,7 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
       window.removeEventListener('pointerdown', unlock)
       document.removeEventListener('visibilitychange', onVisibility)
       io.disconnect()
+      stopKnockout()
       video.pause()
     }
   }, [reduce])
@@ -159,22 +177,22 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
         <img src={HERO_POSTER} alt="" className={mediaClass} />
       ) : (
         <>
-          <div
-            className={`absolute inset-0 ${knockout ? 'mix-blend-multiply' : ''} ${live ? '' : 'opacity-0'}`}
-          >
-            <video
-              ref={videoRef}
-              className={mediaClass}
-              autoPlay
-              muted
-              playsInline
-              loop={false}
-              preload="auto"
-              controls={false}
-              disablePictureInPicture
-              disableRemotePlayback
-            />
-          </div>
+          <video
+            ref={videoRef}
+            className={`${mediaClass} ${knockout ? 'opacity-0' : live ? '' : 'opacity-0'}`}
+            autoPlay
+            muted
+            playsInline
+            loop={false}
+            preload="auto"
+            controls={false}
+            disablePictureInPicture
+            disableRemotePlayback
+          />
+          <canvas
+            ref={canvasRef}
+            className={`${mediaClass} ${knockout && live ? '' : 'opacity-0'}`}
+          />
           <img
             src={HERO_POSTER}
             alt=""

@@ -84,6 +84,23 @@ body,
   height: min(56.25vw, 100%);
 }
 
+/* iOS draws a native play overlay on paused <video>, even with controls=false. */
+.hero-comic video {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.hero-comic video::-webkit-media-controls,
+.hero-comic video::-webkit-media-controls-start-playback-button,
+.hero-comic video::-webkit-media-controls-overlay-play-button,
+.hero-comic video::-webkit-media-controls-panel {
+  display: none !important;
+  -webkit-appearance: none;
+  appearance: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Opaque media surfaces sit above the page glow so light never washes photos */
 .media-surface {
   background: var(--color-surface);

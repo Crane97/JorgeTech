@@ -70,12 +70,12 @@ function HeroComic({ reduce }: { reduce: boolean | null }) {
   }, [reduce])
 
   const mediaClass =
-    'h-full w-full object-contain object-bottom lg:object-[left_center]'
+    'h-full w-full object-contain object-bottom lg:object-[left_bottom]'
 
   return (
     <div
       ref={hostRef}
-      className="pointer-events-none z-0 overflow-hidden max-lg:relative max-lg:mt-4 max-lg:h-[min(38dvh,280px)] max-lg:w-full max-lg:shrink-0 lg:absolute lg:inset-0"
+      className="hero-comic pointer-events-none z-0 overflow-hidden max-lg:relative max-lg:mt-1 max-lg:h-[min(44dvh,310px)] max-lg:w-full max-lg:shrink-0"
       aria-hidden
     >
       {reduce ? (
@@ -108,10 +108,10 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
       id="top"
       className="relative isolate flex min-h-[100dvh] flex-col overflow-hidden pt-16"
     >
-      <div className="relative z-20 mx-auto flex w-full max-w-[1400px] flex-1 items-start px-5 pt-10 pb-4 sm:px-8 lg:min-h-[calc(100dvh-4rem)] lg:items-center lg:px-10 lg:py-20">
+      <div className="relative z-20 mx-auto flex w-full max-w-[1400px] flex-1 items-start px-5 pt-8 pb-3 sm:px-8 lg:px-10 lg:pt-12 lg:pb-8">
         <div className="max-w-3xl">
           <motion.p
-            className="mb-6 font-mono text-xs tracking-[0.14em] text-ink/75 uppercase"
+            className="mb-5 font-mono text-xs tracking-[0.14em] text-ink/75 uppercase lg:mb-6"
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: EASE_OUT }}
@@ -119,7 +119,7 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
             {t.hero.line1} · {t.hero.line2} · {t.hero.line3}
           </motion.p>
 
-          <h1 className="mb-5 text-[2.75rem] leading-[1.05] font-medium tracking-[-0.035em] text-ink sm:text-6xl lg:text-[4.25rem]">
+          <h1 className="mb-5 text-[2.75rem] leading-[1.05] font-medium tracking-[-0.035em] text-ink sm:text-6xl lg:mb-8 lg:text-[4.25rem]">
             {nameParts.map((part, i) => (
               <motion.span
                 key={`${part}-${i}`}
@@ -137,53 +137,60 @@ export function Hero({ chrome, t }: { chrome: Chrome; t: Translation }) {
             ))}
           </h1>
 
-          <motion.p
-            className="mb-4 max-w-xl text-xl font-medium tracking-[-0.02em] text-ink sm:text-2xl"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: EASE_OUT }}
-          >
-            {chrome.hero.headline}
-          </motion.p>
+          <div className="relative">
+            <div
+              aria-hidden
+              className="hero-copy-scrim pointer-events-none absolute -inset-x-5 -top-3 -bottom-4 max-lg:hidden sm:-inset-x-8"
+            />
 
-          <motion.p
-            className="mb-10 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.26, ease: EASE_OUT }}
-          >
-            {chrome.hero.subtext}
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap items-center gap-3"
-            initial={reduce ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.32, ease: EASE_OUT }}
-          >
-            <Link
-              to="/projects"
-              className="btn-apple inline-flex h-11 items-center gap-2 rounded-lg bg-ink px-5 text-sm font-medium text-surface"
+            <motion.p
+              className="relative mb-4 max-w-xl text-xl font-medium tracking-[-0.02em] text-ink sm:text-2xl"
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: EASE_OUT }}
             >
-              {chrome.hero.ctaWork}
-              <ArrowRight size={16} strokeWidth={1.5} />
-            </Link>
-            <Link
-              to="/#contact"
-              className="btn-apple btn-apple-outline inline-flex h-11 items-center rounded-lg border border-ink/20 bg-surface px-5 text-sm font-medium text-ink"
-            >
-              {chrome.hero.ctaContact}
-            </Link>
-          </motion.div>
+              {chrome.hero.headline}
+            </motion.p>
 
-          <motion.p
-            className="mt-8 font-mono text-xs tracking-wide text-ink/70 lg:mt-12"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.4, ease: EASE_OUT }}
-          >
-            {t.hero.basedIn} {t.hero.location}
-          </motion.p>
+            <motion.p
+              className="relative mb-8 max-w-xl text-base leading-relaxed text-muted sm:text-lg lg:mb-10"
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.26, ease: EASE_OUT }}
+            >
+              {chrome.hero.subtext}
+            </motion.p>
+
+            <motion.div
+              className="relative flex flex-wrap items-center gap-3"
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.32, ease: EASE_OUT }}
+            >
+              <Link
+                to="/projects"
+                className="btn-apple inline-flex h-11 items-center gap-2 rounded-lg bg-ink px-5 text-sm font-medium text-surface"
+              >
+                {chrome.hero.ctaWork}
+                <ArrowRight size={16} strokeWidth={1.5} />
+              </Link>
+              <Link
+                to="/#contact"
+                className="btn-apple btn-apple-outline inline-flex h-11 items-center rounded-lg border border-ink/20 bg-surface px-5 text-sm font-medium text-ink"
+              >
+                {chrome.hero.ctaContact}
+              </Link>
+            </motion.div>
+
+            <motion.p
+              className="relative mt-8 font-mono text-xs tracking-wide text-ink/70 lg:mt-10"
+              initial={reduce ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.4, ease: EASE_OUT }}
+            >
+              {t.hero.basedIn} {t.hero.location}
+            </motion.p>
+          </div>
         </div>
       </div>
 

@@ -2,23 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f8fa" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- seo:start -->
+    <title>Jorge Ruiz de la Torre · Full Stack Engineer</title>
     <meta
       name="description"
-      content="Jorge Ruiz de la Torre Bertolín — Full Stack Engineer portfolio. Selected projects, experience, and contact."
+      content="Full stack engineer building reliable software end to end: backends, platforms and AI-enabled commercial tools. Selected projects, experience and contact."
     />
-    <title>Jorge Ruiz de la Torre Bertolín</title>
+    <!-- seo:end -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jorge Ruiz de la Torre Bertolín",
+        "alternateName": "Jorge Ruiz de la Torre",
+        "url": "https://jorge-tech.vercel.app/",
+        "image": "https://jorge-tech.vercel.app/og-image.jpg",
+        "jobTitle": "Full Stack Engineer",
+        "email": "mailto:jorge@macdiego.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Miami",
+          "addressRegion": "FL",
+          "addressCountry": "US"
+        },
+        "alumniOf": [
+          { "@type": "CollegeOrUniversity", "name": "Universitat Politècnica de València" },
+          { "@type": "CollegeOrUniversity", "name": "INSA Lyon" }
+        ],
+        "knowsLanguage": ["es", "en", "fr"],
+        "sameAs": [
+          "https://www.linkedin.com/in/jorgerdelat",
+          "https://instagram.com/jorgerdelat"
+        ]
+      }
+    </script>
   </head>
   <body>
-    <!--
-      THESIS: Prove engineering quality through product-grade clarity, not agency spectacle.
-      OWN-WORLD: Cold product light, Geist, ink/blue accent, case-study storytelling.
-      STORY: Visitor trusts Jorge can ship high-quality software in under 4 minutes.
-      FIRST VIEWPORT: Brand name + positioning + work/contact CTAs over portrait plane.
-      FORM: Canon craft bar (Stripe/Vercel/Linear/Notion/Raycast/Apple) executed straight.
-      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-    -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

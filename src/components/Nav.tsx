@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import type { Locale } from '../i18n'
-import type { Chrome } from '../content/chrome'
+import { splitLocale } from '../i18n'
+import { useI18n } from '../i18n/useI18n'
 import { logoMark } from '../lib/assets'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
@@ -17,20 +17,13 @@ const HOME_LINKS = [
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1]
 
-export function Nav({
-  chrome,
-  locale,
-  onLocaleChange,
-}: {
-  chrome: Chrome
-  locale: Locale
-  onLocaleChange: (locale: Locale) => void
-}) {
+export function Nav() {
+  const { t, lp } = useI18n()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const reduce = useReducedMotion()
   const location = useLocation()
-  const onProjectsPage = location.pathname.startsWith('/projects')
+  const onProjectsPage = splitLocale(location.pathname).path === '/projects'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -50,7 +43,7 @@ export function Nav({
     setOpen(false)
   }, [location.pathname])
 
-  const projectsHref = onProjectsPage ? '/projects' : '/#projects'
+  const projectsHref = lp(onProjectsPage ? '/projects' : '/#projects')
 
   return (
     <header
@@ -61,10 +54,10 @@ export function Nav({
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-10">
-        <Link to="/" className="flex items-center gap-3">
-          <img src={logoMark} alt="" className="h-7 w-7 object-contain" />
+        <Link to={lp('/')} className="flex items-center gap-3">
+          <img src={logoMark} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
           <span className="text-sm font-medium tracking-tight text-ink sm:text-[15px]">
-            {chrome.brand}
+            {t.brand}
           </span>
         </Link>
 
@@ -72,20 +65,20 @@ export function Nav({
           {HOME_LINKS.map((link) => (
             <Link
               key={link.id}
-              to={link.id === 'projects' ? projectsHref : link.to}
+              to={link.id === 'projects' ? projectsHref : lp(link.to)}
               className="text-sm text-ink/70 transition-colors duration-200 hover:text-ink"
             >
-              {chrome.nav[link.key]}
+              {t.nav[link.key]}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-4">
-          <LanguageSwitcher locale={locale} onChange={onLocaleChange} />
+          <LanguageSwitcher />
           <button
             type="button"
             className="btn-press inline-flex h-10 w-10 items-center justify-center rounded-lg border border-ink/15 bg-surface text-ink lg:hidden"
-            aria-label={open ? chrome.nav.closeMenu : chrome.nav.openMenu}
+            aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
@@ -110,11 +103,11 @@ export function Nav({
               {HOME_LINKS.map((link) => (
                 <Link
                   key={link.id}
-                  to={link.id === 'projects' ? projectsHref : link.to}
+                  to={link.id === 'projects' ? projectsHref : lp(link.to)}
                   onClick={() => setOpen(false)}
                   className="rounded-lg px-3 py-3 text-base text-ink transition-colors hover:bg-bg"
                 >
-                  {chrome.nav[link.key]}
+                  {t.nav[link.key]}
                 </Link>
               ))}
             </nav>

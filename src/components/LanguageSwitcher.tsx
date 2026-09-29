@@ -1,14 +1,9 @@
-import { LOCALES, type Locale } from '../i18n'
+import { LOCALES } from '../i18n'
+import { useI18n } from '../i18n/useI18n'
 
-export function LanguageSwitcher({
-  locale,
-  onChange,
-  className = '',
-}: {
-  locale: Locale
-  onChange: (locale: Locale) => void
-  className?: string
-}) {
+export function LanguageSwitcher({ className = '' }: { className?: string }) {
+  const { locale, setLocale } = useI18n()
+
   return (
     <div
       className={`flex items-center gap-2 font-mono text-xs tracking-wide ${className}`}
@@ -24,7 +19,7 @@ export function LanguageSwitcher({
           )}
           <button
             type="button"
-            onClick={() => onChange(code)}
+            onClick={() => setLocale(code)}
             aria-pressed={locale === code}
             className={`btn-press transition-opacity duration-200 ${
               locale === code ? 'text-ink opacity-100' : 'text-muted opacity-70 hover:opacity-100'

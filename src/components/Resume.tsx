@@ -1,24 +1,24 @@
-import type { Chrome } from '../content/chrome'
-import type { Translation } from '../i18n'
+import { useI18n } from '../i18n/useI18n'
 import { Reveal } from './Reveal'
 
-export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
+export function Resume() {
+  const { t } = useI18n()
   return (
     <section id="resume" className="scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32 lg:px-10">
       <div className="mx-auto max-w-[1400px]">
         <Reveal className="mb-12 max-w-2xl">
           <h2 className="mb-4 text-3xl font-medium tracking-[-0.03em] text-ink sm:text-5xl">
-            {chrome.resume.title}
+            {t.resume.title}
           </h2>
           <p className="text-base leading-relaxed text-muted sm:text-lg">
-            {chrome.resume.intro}
+            {t.resume.intro}
           </p>
         </Reveal>
 
         <Reveal>
           <div className="border-t border-line pt-8">
             <h3 className="text-2xl font-medium tracking-[-0.02em] text-ink sm:text-3xl">
-              {chrome.fullName}
+              {t.fullName}
             </h3>
             <p className="mt-3 max-w-3xl text-[15px] leading-relaxed text-muted">
               {t.profile.body}
@@ -29,7 +29,7 @@ export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
         <div className="mt-14">
           <Reveal>
             <p className="mb-2 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-              {chrome.resume.experience}
+              {t.resume.experience}
             </p>
           </Reveal>
           <ul className="mx-auto flex max-w-4xl flex-col">
@@ -68,7 +68,7 @@ export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
           <div className="mt-6 grid gap-12 border-t border-line pt-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-7">
               <p className="mb-6 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                {chrome.resume.education}
+                {t.resume.education}
               </p>
               <ul className="mb-10 flex flex-col gap-6">
                 {t.education.items.map((item) => (
@@ -86,7 +86,7 @@ export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
               </ul>
 
               <p className="mb-4 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                {chrome.resume.courses}
+                {t.resume.courses}
               </p>
               <ul className="flex flex-col gap-4">
                 {t.courses.items.map((item) => (
@@ -101,14 +101,14 @@ export function Resume({ chrome, t }: { chrome: Chrome; t: Translation }) {
 
             <div className="lg:col-span-5">
               <p className="mb-4 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                {chrome.resume.languages}
+                {t.resume.languages}
               </p>
               <p className="mb-8 text-sm leading-relaxed text-ink/85">
                 {t.education.languages}
               </p>
 
               <p className="mb-3 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
-                {chrome.resume.additional}
+                {t.resume.additional}
               </p>
               <p className="text-sm leading-relaxed text-ink/80">
                 {t.education.additional}

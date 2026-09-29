@@ -5,6 +5,8 @@
  * 2D getImageData path is only a fallback when WebGL is unavailable.
  */
 
+import { FORCE_2D, HERO_DEBUG, heroDebugState, heroLog } from './heroDebug'
+
 // Paper luminance (min channel) at which alpha starts fading, and where it hits 0.
 const KEY_LOW = 0.72
 const KEY_HIGH = 0.9
@@ -120,6 +122,12 @@ function createWebGLRenderer(canvas: HTMLCanvasElement): Renderer | null {
       gl.viewport(box.dx, h - box.dy - box.dh, box.dw, box.dh)
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, video)
       gl.drawArrays(gl.TRIANGLES, 0, 6)
+      if (HERO_DEBUG) {
+        const err = gl.getError()
+        if (err !== gl.NO_ERROR && heroDebugState.glErrors.length < 5) {
+          heroDebugState.glErrors.push(`0x${err.toString(16)} @draw ${heroDebugState.draws}`)
+        }
+      }
     },
     dispose() {
       gl.deleteTexture(texture)
@@ -174,7 +182,10 @@ export function startHeroKnockout(
   canvas: HTMLCanvasElement,
   host: HTMLElement,
 ) {
-  const renderer = createWebGLRenderer(canvas) ?? create2DRenderer(canvas)
+  const webgl = FORCE_2D ? null : createWebGLRenderer(canvas)
+  const renderer = webgl ?? create2DRenderer(canvas)
+  heroDebugState.renderer = webgl ? 'webgl' : renderer ? '2d' : 'none'
+  heroLog(`knockout start renderer=${heroDebugState.renderer}`)
   if (!renderer) return () => {}
 
   const tagged = video as VideoWithFrameCallback
@@ -188,7 +199,13 @@ export function startHeroKnockout(
     const w = canvas.width
     const h = canvas.height
     if (!w || !h || !video.videoWidth || !video.videoHeight || video.readyState < 2) return
-    renderer.draw(video, w, h)
+    try {
+      renderer.draw(video, w, h)
+      heroDebugState.draws++
+    } catch (err) {
+      heroLog(`draw threw: ${String(err)}`)
+      throw err
+    }
   }
 
   const tick = () => {

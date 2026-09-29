@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
+import { HERO_DEBUG, heroDebugState, heroLog } from '../lib/heroDebug'
 import { startHeroKnockout } from '../lib/heroKnockout'
 
 const HOLD_MS = 5000
@@ -45,6 +46,29 @@ function armInlinePlayback(video: HTMLVideoElement) {
   video.setAttribute('webkit-playsinline', 'true')
 }
 
+function HeroDebugPanel({ video, reduce }: { video: RefObject<HTMLVideoElement | null>; reduce: boolean | null }) {
+  const [, setTick] = useState(0)
+  useEffect(() => {
+    const id = window.setInterval(() => setTick((n) => n + 1), 500)
+    return () => window.clearInterval(id)
+  }, [])
+  const v = video.current
+  const lines = [
+    navigator.userAgent,
+    `reduceMotion=${reduce} mounts=${heroDebugState.mounts} renderer=${heroDebugState.renderer} draws=${heroDebugState.draws}`,
+    v
+      ? `src=${v.currentSrc.split('/').pop()} t=${v.currentTime.toFixed(2)} rs=${v.readyState} ns=${v.networkState} paused=${v.paused} err=${v.error?.code ?? '-'}`
+      : 'no video element',
+    `glErrors=${heroDebugState.glErrors.join(', ') || '-'}`,
+    ...heroDebugState.events,
+  ]
+  return (
+    <pre className="pointer-events-auto fixed inset-x-2 bottom-2 z-[100] max-h-[45vh] overflow-auto rounded bg-black/85 p-2 font-mono text-[10px] leading-tight whitespace-pre-wrap text-green-300 select-text">
+      {lines.join('\n')}
+    </pre>
+  )
+}
+
 export function HeroVideo({ reduce }: { reduce: boolean | null }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -65,6 +89,13 @@ export function HeroVideo({ reduce }: { reduce: boolean | null }) {
     let holdTimer = 0
     let stopKnockout = () => {}
 
+    heroDebugState.mounts++
+    heroLog(`mount #${heroDebugState.mounts} path=${window.location.pathname}`)
+    const logEvent = (e: Event) =>
+      heroLog(`${e.type} t=${video.currentTime.toFixed(2)} rs=${video.readyState} paused=${video.paused}`)
+    const DEBUG_EVENTS = ['loadstart', 'loadedmetadata', 'loadeddata', 'canplay', 'play', 'playing', 'pause', 'waiting', 'stalled', 'suspend', 'error', 'ended', 'emptied', 'abort']
+    if (HERO_DEBUG) DEBUG_EVENTS.forEach((type) => video.addEventListener(type, logEvent))
+
     const source = pickHeroSource()
     setKnockout(source.knockout)
     armInlinePlayback(video)
@@ -77,8 +108,9 @@ export function HeroVideo({ reduce }: { reduce: boolean | null }) {
     const tryPlay = () => {
       if (cancelled || !inView || holding) return
       armInlinePlayback(video)
-      void video.play().catch(() => {
+      void video.play().catch((err: unknown) => {
         /* Low Power Mode / autoplay policy: retry on the next gesture. */
+        heroLog(`play() rejected: ${err instanceof Error ? `${err.name}: ${err.message}` : String(err)}`)
       })
     }
 
@@ -156,12 +188,17 @@ export function HeroVideo({ reduce }: { reduce: boolean | null }) {
       io.disconnect()
       stopKnockout()
       video.pause()
+      heroLog('unmount')
+      if (HERO_DEBUG) DEBUG_EVENTS.forEach((type) => video.removeEventListener(type, logEvent))
     }
   }, [reduce])
 
+  const debugPanel = HERO_DEBUG ? <HeroDebugPanel video={videoRef} reduce={reduce} /> : null
   const mediaClass = 'absolute inset-0 h-full w-full object-contain object-bottom'
 
   return (
+    <>
+    {debugPanel}
     <div
       ref={hostRef}
       className="hero-comic pointer-events-none z-0 overflow-hidden"
@@ -195,5 +232,6 @@ export function HeroVideo({ reduce }: { reduce: boolean | null }) {
         </>
       )}
     </div>
+    </>
   )
 }

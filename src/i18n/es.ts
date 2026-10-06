@@ -291,9 +291,7 @@ export const es = {
       },
     ],
     title: 'Proyectos seleccionados',
-    intro: 'Un vistazo rápido a builds recientes. Abre el archivo completo para los casos de estudio.',
-    pageTitle: 'Todos los proyectos',
-    pageIntro: 'Casos de estudio de plataformas que diseñé, construí y lancé. Productos reales, restricciones reales.',
+    intro: 'Proyectos recientes, uno a uno. Desplázate entre ellos y abre cualquiera para ver el caso de estudio completo.',
     problem: 'Problema',
     solution: 'Solución',
     architecture: 'Arquitectura',
@@ -301,11 +299,11 @@ export const es = {
     results: 'Resultados',
     expandImage: 'Ver imagen',
     previousImage: 'Imagen anterior',
+    previousProject: 'Proyecto anterior',
+    nextProject: 'Proyecto siguiente',
     nextImage: 'Imagen siguiente',
     close: 'Cerrar',
     viewCase: 'Ver caso de estudio',
-    viewAllProjects: 'Ver todos los proyectos',
-    backToHome: 'Volver al inicio',
     visitLive: 'Visitar sitio',
   },
   stack: {
@@ -369,10 +367,6 @@ export const es = {
     home: {
       title: 'Jorge Ruiz de la Torre · Ingeniero Full Stack',
       description: 'Ingeniero full stack que construye software fiable de extremo a extremo: backends, plataformas y herramientas comerciales con IA. Proyectos, experiencia y contacto.',
-    },
-    projects: {
-      title: 'Proyectos · Jorge Ruiz de la Torre',
-      description: 'Casos de estudio de plataformas que he diseñado, construido y publicado: web scraping con IA, porras del Mundial, un sistema de reservas de coworking y más.',
     },
     about: {
       title: 'Sobre mí · Jorge Ruiz de la Torre',

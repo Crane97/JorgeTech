@@ -19,12 +19,11 @@ export type Translation = (typeof translations)[Locale]
 export const SITE_URL = 'https://jorge-tech.vercel.app'
 
 /** Pages that exist in every locale, used for routing, hreflang and prerendering. */
-export const PAGES = ['home', 'projects', 'about'] as const
+export const PAGES = ['home', 'about'] as const
 export type Page = (typeof PAGES)[number]
 
 const PAGE_PATHS: Record<Page, string> = {
   home: '/',
-  projects: '/projects',
   about: '/about',
 }
 

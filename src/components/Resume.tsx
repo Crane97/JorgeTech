@@ -7,12 +7,9 @@ export function Resume() {
     <section id="resume" className="scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32 lg:px-10">
       <div className="mx-auto max-w-[1400px]">
         <Reveal className="mb-12 max-w-2xl">
-          <h2 className="mb-4 text-3xl font-medium tracking-[-0.03em] text-ink sm:text-5xl">
+          <h2 className="text-3xl font-medium tracking-[-0.03em] text-ink sm:text-5xl">
             {t.resume.title}
           </h2>
-          <p className="text-base leading-relaxed text-muted sm:text-lg">
-            {t.resume.intro}
-          </p>
         </Reveal>
 
         <Reveal>

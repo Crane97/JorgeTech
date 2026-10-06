@@ -52,14 +52,16 @@ Theme lock: light only.
 
 - Sticky product nav (single row)
 - Full-bleed portrait hero with readable scrim
-- Home: selected project preview (3 latest) with link to `/projects`
-- `/projects`: full case studies one-by-one (Problem / Solution / Architecture / Technologies / Results)
+- Home `#projects`: scroll-driven 3D depth stack (sticky stage, one project card front and centre; passed cards tilt back on `rotateX` and recede on `translateZ` into the page colour; `01 / 05` counter + hairline progress). Reduced motion: plain vertical list of the same cards
+- Project modal (`?project=<id>` in the URL, shareable, Back closes): carousel + full case study (Problem / Solution / Architecture / Technologies / Results), previous/next project, focus trapped, page scroll locked. `/projects` redirects to the stack (`#id` opens that project)
 - Experience timeline
 - Stack groups with mono chips
 - About editorial + boxing gallery
 - Resume open layout on the shared page background (titles + hairlines only)
-- Contact form (mailto bridge), no filled section panels
+- Contact form (Web3Forms, mailto fallback), no filled section panels
 
 ## Anti-patterns rejected
 
-Agency marquee hero, cream-on-black editorial CV, project-in-modal burial, purple glow, card-in-card, perpetual motion.
+Agency marquee hero, cream-on-black editorial CV, purple glow, card-in-card, perpetual motion, particle/gaming 3D.
+
+Projects in a modal are accepted (owner decision, 2026-10): the stack is the proof surface on the home scroll path, the modal holds depth on demand, and each modal has its own URL so nothing is buried.

@@ -1,12 +1,18 @@
-import { useEffect } from 'react'
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigationType,
+} from 'react-router-dom'
 import { AboutPage } from './components/AboutPage'
 import { Contact } from './components/Contact'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
 import { PointerGlow } from './components/PointerGlow'
-import { ProjectsPage } from './components/ProjectsPage'
-import { ProjectsPreview } from './components/ProjectsPreview'
+import { ProjectsStack } from './components/ProjectsStack'
 import { Resume } from './components/Resume'
 import { ScrollProgress } from './components/ScrollProgress'
 import { TechStack } from './components/TechStack'
@@ -25,21 +31,26 @@ import { applyHead, buildHead } from './lib/seo'
  */
 function HomePage() {
   const location = useLocation()
+  const navigationType = useNavigationType()
+  const firstRun = useRef(true)
 
   useEffect(() => {
-    if (!location.hash) return
+    const initial = firstRun.current
+    firstRun.current = false
+    // Back/forward (e.g. closing a project modal) keeps the reader where they were.
+    if (!location.hash || (navigationType === 'POP' && !initial)) return
     const id = location.hash.replace(/^#/, '')
     const el = document.getElementById(id)
     if (!el) return
     requestAnimationFrame(() => {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     })
-  }, [location.pathname, location.hash])
+  }, [location.pathname, location.hash, navigationType])
 
   return (
     <main>
       <Hero />
-      <ProjectsPreview />
+      <ProjectsStack />
       <Resume />
       <TechStack />
       <Contact />
@@ -58,6 +69,19 @@ function DocumentHead() {
   return null
 }
 
+/** The old /projects archive now lives in the home stack; `#id` opens that project. */
+function LegacyProjectsRedirect() {
+  const { lp } = useI18n()
+  const { hash } = useLocation()
+  const id = hash.replace(/^#/, '')
+  return (
+    <Navigate
+      to={id ? { pathname: lp('/'), search: `?project=${encodeURIComponent(id)}` } : lp('/#projects')}
+      replace
+    />
+  )
+}
+
 function NotFound() {
   const { lp } = useI18n()
   return <Navigate to={lp('/')} replace />
@@ -65,7 +89,7 @@ function NotFound() {
 
 const PAGE_ROUTES = [
   { path: '/', element: <HomePage /> },
-  { path: '/projects', element: <ProjectsPage /> },
+  { path: '/projects', element: <LegacyProjectsRedirect /> },
   { path: '/about', element: <AboutPage /> },
 ]
 

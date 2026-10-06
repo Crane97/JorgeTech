@@ -291,9 +291,7 @@ export const en = {
       },
     ],
     title: 'Selected projects',
-    intro: 'A quick look at recent builds. Open the full archive for deeper case studies.',
-    pageTitle: 'All projects',
-    pageIntro: 'Case studies from platforms I designed, built, and shipped. Real products, real constraints.',
+    intro: 'Recent builds, one at a time. Scroll through them and open any project for the full case study.',
     problem: 'Problem',
     solution: 'Solution',
     architecture: 'Architecture',
@@ -301,11 +299,11 @@ export const en = {
     results: 'Results',
     expandImage: 'View image',
     previousImage: 'Previous image',
+    previousProject: 'Previous project',
+    nextProject: 'Next project',
     nextImage: 'Next image',
     close: 'Close',
     viewCase: 'View case study',
-    viewAllProjects: 'View all projects',
-    backToHome: 'Back to home',
     visitLive: 'Visit live site',
   },
   stack: {
@@ -369,10 +367,6 @@ export const en = {
     home: {
       title: 'Jorge Ruiz de la Torre · Full Stack Engineer',
       description: 'Full stack engineer building reliable software end to end: backends, platforms and AI-enabled commercial tools. Selected projects, experience and contact.',
-    },
-    projects: {
-      title: 'Projects · Jorge Ruiz de la Torre',
-      description: 'Case studies of platforms I designed, built and shipped: AI web scraping, World Cup prediction platforms, a coworking booking system and more.',
     },
     about: {
       title: 'About me · Jorge Ruiz de la Torre',

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { splitLocale } from '../i18n'
 import { useI18n } from '../i18n/useI18n'
 import { logoMark } from '../lib/assets'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -23,7 +22,6 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const reduce = useReducedMotion()
   const location = useLocation()
-  const onProjectsPage = splitLocale(location.pathname).path === '/projects'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -42,8 +40,6 @@ export function Nav() {
   useEffect(() => {
     setOpen(false)
   }, [location.pathname])
-
-  const projectsHref = lp(onProjectsPage ? '/projects' : '/#projects')
 
   return (
     <header
@@ -65,7 +61,7 @@ export function Nav() {
           {HOME_LINKS.map((link) => (
             <Link
               key={link.id}
-              to={link.id === 'projects' ? projectsHref : lp(link.to)}
+              to={lp(link.to)}
               className="text-sm text-ink/70 transition-colors duration-200 hover:text-ink"
             >
               {t.nav[link.key]}
@@ -103,7 +99,7 @@ export function Nav() {
               {HOME_LINKS.map((link) => (
                 <Link
                   key={link.id}
-                  to={link.id === 'projects' ? projectsHref : lp(link.to)}
+                  to={lp(link.to)}
                   onClick={() => setOpen(false)}
                   className="rounded-lg px-3 py-3 text-base text-ink transition-colors hover:bg-bg"
                 >

@@ -39,7 +39,7 @@ npm run preview
 ### Languages and URLs
 
 English lives at the root, other languages under a prefix:
-`/`, `/projects`, `/about` · `/es`, `/es/projects`, `/es/about` · `/fr`, …
+`/`, `/about` · `/es`, `/es/about` · `/fr`, … Projects open as a modal on the home page with `?project=<id>` (e.g. `/es?project=coworking`); the old `/projects#id` links redirect there.
 
 On landing on an English URL the site redirects once to the language chosen in
 the switcher (stored in `localStorage`) or, failing that, the browser language.

@@ -299,6 +299,8 @@ export const es = {
     results: 'Resultados',
     expandImage: 'Ver imagen',
     previousImage: 'Imagen anterior',
+    carouselHint: 'Usa la rueda o desliza para girar',
+    carouselLabel: 'Girar proyectos',
     previousProject: 'Proyecto anterior',
     nextProject: 'Proyecto siguiente',
     nextImage: 'Imagen siguiente',

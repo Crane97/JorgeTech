@@ -4,7 +4,7 @@
 
 1. **Hero** - Name as brand, one positioning line, two CTAs (Selected work / Contact), dominant portrait/product visual.
 2. **Selected Projects (home)** - Compact preview of the three latest builds (image + short copy) with CTA to the full archive.
-3. **Projects (home `#projects`, superseded 2026-10)** - Scroll-driven 3D stack of every project; each opens a modal case study (`?project=<id>`). See DESIGN.md.
+3. **Projects (home `#projects`, superseded 2026-10)** - Rotating 3D ring carousel of every project; each opens a modal case study (`?project=<id>`). See DESIGN.md.
 4. **Professional Experience** - Timeline of roles with existing bullets.
 5. **Technology Stack** - Aggregated from real project/experience technologies, grouped for scanning.
 6. **About Me** - Personal story + boxing gallery (existing assets/copy).

@@ -299,6 +299,8 @@ export const en = {
     results: 'Results',
     expandImage: 'View image',
     previousImage: 'Previous image',
+    carouselHint: 'Scroll or swipe to spin',
+    carouselLabel: 'Spin projects',
     previousProject: 'Previous project',
     nextProject: 'Next project',
     nextImage: 'Next image',

@@ -79,6 +79,8 @@ export function AboutPage() {
                   images={BOXING_IMAGES}
                   alt={t.about.photos}
                   expandLabel={t.projects.expandImage}
+                  previousLabel={t.projects.previousImage}
+                  nextLabel={t.projects.nextImage}
                   objectPosition="object-center"
                   onExpand={(imageIndex) => setLightboxIndex(imageIndex)}
                 />

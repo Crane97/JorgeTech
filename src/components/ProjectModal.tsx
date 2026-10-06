@@ -163,6 +163,8 @@ export function ProjectModal({
                   images={study.images}
                   alt={study.title}
                   expandLabel={t.projects.expandImage}
+                  previousLabel={t.projects.previousImage}
+                  nextLabel={t.projects.nextImage}
                   onExpand={setLightbox}
                 />
               ) : study.images[0] ? (

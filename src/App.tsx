@@ -12,7 +12,7 @@ import { Contact } from './components/Contact'
 import { Hero } from './components/Hero'
 import { Nav } from './components/Nav'
 import { PointerGlow } from './components/PointerGlow'
-import { ProjectsStack } from './components/ProjectsStack'
+import { ProjectsCarousel } from './components/ProjectsCarousel'
 import { Resume } from './components/Resume'
 import { ScrollProgress } from './components/ScrollProgress'
 import { TechStack } from './components/TechStack'
@@ -50,7 +50,7 @@ function HomePage() {
   return (
     <main>
       <Hero />
-      <ProjectsStack />
+      <ProjectsCarousel />
       <Resume />
       <TechStack />
       <Contact />

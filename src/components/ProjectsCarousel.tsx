@@ -120,17 +120,17 @@ function CardFront({
       <div className="flex shrink-0 flex-col gap-3 p-4 sm:p-5">
         <div className="min-w-0">
           <div className="flex items-baseline justify-between gap-3">
-            <h3 className="line-clamp-1 text-lg font-medium tracking-[-0.02em] text-ink sm:text-xl">
+            <h3 className="line-clamp-1 text-base font-medium tracking-[-0.015em] text-ink sm:text-[17px]">
               {study.title}
             </h3>
             <span className="shrink-0 font-mono text-xs text-muted">{study.year}</span>
           </div>
-          <p className="mt-1 line-clamp-1 text-sm text-muted">{blurb}</p>
+          <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-muted">{blurb}</p>
         </div>
         {/* Visual affordance only: the whole face is the button. */}
-        <span className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-ink px-6 text-[15px] font-medium text-surface transition-[background-color,transform] duration-200 group-hover:bg-ink/90 group-active:scale-[0.98] sm:w-auto sm:self-start">
+        <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 text-sm font-medium text-surface transition-[background-color,transform] duration-200 group-hover:bg-ink/90 group-active:scale-[0.98] sm:w-auto sm:self-start">
           {t.projects.viewCase}
-          <ArrowRight size={18} strokeWidth={1.5} />
+          <ArrowRight size={16} strokeWidth={1.5} />
         </span>
       </div>
       <motion.span
@@ -185,14 +185,14 @@ function CtaFront({
       </div>
       <div className="flex shrink-0 flex-col gap-3 p-4 pt-1 sm:p-5 sm:pt-2">
         <div className="min-w-0">
-          <h3 className="line-clamp-1 text-lg font-medium tracking-[-0.02em] text-ink sm:text-xl">
+          <h3 className="line-clamp-1 text-base font-medium tracking-[-0.015em] text-ink sm:text-[17px]">
             {t.projects.ctaTitle}
           </h3>
-          <p className="mt-1 line-clamp-1 text-sm text-muted">{t.projects.ctaBody}</p>
+          <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-muted">{t.projects.ctaBody}</p>
         </div>
-        <span className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 text-[15px] font-medium text-surface transition-[background-color,transform] duration-200 group-hover:bg-accent/90 group-active:scale-[0.98] sm:w-auto sm:self-start">
+        <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 text-sm font-medium text-surface transition-[background-color,transform] duration-200 group-hover:bg-accent/90 group-active:scale-[0.98] sm:w-auto sm:self-start">
           {t.projects.ctaButton}
-          <ArrowRight size={18} strokeWidth={1.5} />
+          <ArrowRight size={16} strokeWidth={1.5} />
         </span>
       </div>
       <motion.span

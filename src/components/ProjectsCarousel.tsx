@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, Plus } from 'lucide-react'
 import {
   motion,
   useMotionValue,
@@ -14,8 +14,10 @@ import {
   useState,
   type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
+  type ReactNode,
   type RefObject,
 } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useI18n } from '../i18n/useI18n'
 import { logoMark } from '../lib/assets'
 import { buildCaseStudies, type CaseStudy } from '../lib/caseStudies'
@@ -33,6 +35,9 @@ const RESUME_AFTER_MS = 2500
 /** Pointer travel that turns a press into a drag (and cancels the click). */
 const DRAG_THRESHOLD_PX = 6
 
+/** Ring tilt: we look at it slightly from above, so the back cards ride higher. */
+const TILT_DEG = -9
+
 const pad = (n: number) => String(n).padStart(2, '0')
 
 /** Shortest signed distance between two angles, in (-180, 180]. */
@@ -45,21 +50,23 @@ function snapAngle(a: number, step: number) {
   return Math.round(a / step) * step
 }
 
-type Geometry = { width: number; height: number; radius: number }
+type Geometry = { width: number; height: number; radius: number; lift: number }
 
 function useRingGeometry(stage: RefObject<HTMLDivElement | null>, count: number) {
-  const [geo, setGeo] = useState<Geometry>({ width: 560, height: 470, radius: 420 })
+  const [geo, setGeo] = useState<Geometry>({ width: 460, height: 420, radius: 900, lift: 160 })
   useEffect(() => {
     const el = stage.current
     if (!el) return
     const measure = () => {
       const w = el.clientWidth
-      const width = Math.round(w < 640 ? w * 0.8 : Math.min(620, w * 0.46))
+      const width = Math.round(w < 640 ? w * 0.74 : Math.min(500, w * 0.32))
       // 16:10 screenshot + footer with title and button.
       const height = Math.round(width * 0.625 + (w < 640 ? 150 : 132))
-      // Cards just touch at their edges, plus breathing room.
-      const radius = Math.round((width / 2 / Math.tan(Math.PI / count)) * 1.12)
-      setGeo({ width, height, radius })
+      // Generous gaps between cards so the ring reads as a wide, open carousel.
+      const radius = Math.round((width / 2 / Math.tan(Math.PI / count)) * (w < 640 ? 1.15 : 1.5))
+      // Room above the front card for the tilted back of the ring.
+      const lift = Math.round(radius * Math.sin((-TILT_DEG * Math.PI) / 180) * 1.1)
+      setGeo({ width, height, radius, lift })
     }
     measure()
     const ro = new ResizeObserver(measure)
@@ -113,17 +120,17 @@ function CardFront({
       <div className="flex shrink-0 flex-col gap-3 p-4 sm:p-5">
         <div className="min-w-0">
           <div className="flex items-baseline justify-between gap-3">
-            <h3 className="line-clamp-1 text-lg font-medium tracking-[-0.02em] text-ink sm:text-xl">
+            <h3 className="line-clamp-1 text-base font-medium tracking-[-0.015em] text-ink sm:text-[17px]">
               {study.title}
             </h3>
             <span className="shrink-0 font-mono text-xs text-muted">{study.year}</span>
           </div>
-          <p className="mt-1 line-clamp-1 text-sm text-muted">{blurb}</p>
+          <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-muted">{blurb}</p>
         </div>
         {/* Visual affordance only: the whole face is the button. */}
-        <span className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-ink px-6 text-[15px] font-medium text-surface transition-[background-color,transform] duration-200 group-hover:bg-ink/90 group-active:scale-[0.98] sm:w-auto sm:self-start">
+        <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 text-sm font-medium text-surface transition-[background-color,transform] duration-200 group-hover:bg-ink/90 group-active:scale-[0.98] sm:w-auto sm:self-start">
           {t.projects.viewCase}
-          <ArrowRight size={18} strokeWidth={1.5} />
+          <ArrowRight size={16} strokeWidth={1.5} />
         </span>
       </div>
       <motion.span
@@ -135,7 +142,7 @@ function CardFront({
   )
 }
 
-function CardBack({ index, total, title }: { index: number; total: number; title: string }) {
+function CardBack({ label, title }: { label: string; title: string }) {
   return (
     <div
       aria-hidden
@@ -143,32 +150,74 @@ function CardBack({ index, total, title }: { index: number; total: number; title
     >
       <div className="pointer-events-none absolute inset-3 rounded-xl border border-surface/10" />
       <img src={logoMark} alt="" className="h-14 w-14 opacity-90" draggable={false} />
-      <p className="font-mono text-xs tracking-[0.2em] text-surface/60">
-        {pad(index + 1)} / {pad(total)}
-      </p>
+      <p className="font-mono text-xs tracking-[0.2em] text-surface/60">{label}</p>
       <p className="max-w-[70%] text-center text-sm text-surface/70">{title}</p>
     </div>
   )
 }
 
+/** The open slot on the ring: invites visitors to bring their own project. */
+function CtaFront({
+  isFront,
+  veil,
+  onActivate,
+}: {
+  isFront: boolean
+  veil: MotionValue<number>
+  onActivate: () => void
+}) {
+  const { t } = useI18n()
+  return (
+    <button
+      type="button"
+      onClick={onActivate}
+      tabIndex={isFront ? 0 : -1}
+      aria-label={`${t.projects.ctaTitle} — ${t.projects.ctaButton}`}
+      className="group absolute inset-0 flex flex-col overflow-hidden rounded-2xl border border-line bg-surface text-left shadow-[0_30px_80px_-24px_rgb(15_23_42/0.28),0_8px_24px_rgb(15_23_42/0.06)] [backface-visibility:hidden] focus-visible:outline-offset-4"
+    >
+      <div className="relative m-3 flex min-h-0 flex-1 items-center justify-center rounded-xl border-2 border-dashed border-accent/35 bg-accent-soft/60">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-surface text-accent shadow-md transition-transform duration-300 group-hover:scale-105 sm:h-20 sm:w-20">
+          <Plus size={32} strokeWidth={1.5} />
+        </span>
+        <span className="absolute top-3 left-3 rounded-md bg-surface/90 px-2 py-1 font-mono text-[11px] tracking-[0.12em] text-accent uppercase">
+          {t.projects.ctaEyebrow}
+        </span>
+      </div>
+      <div className="flex shrink-0 flex-col gap-3 p-4 pt-1 sm:p-5 sm:pt-2">
+        <div className="min-w-0">
+          <h3 className="line-clamp-1 text-base font-medium tracking-[-0.015em] text-ink sm:text-[17px]">
+            {t.projects.ctaTitle}
+          </h3>
+          <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-muted">{t.projects.ctaBody}</p>
+        </div>
+        <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 text-sm font-medium text-surface transition-[background-color,transform] duration-200 group-hover:bg-accent/90 group-active:scale-[0.98] sm:w-auto sm:self-start">
+          {t.projects.ctaButton}
+          <ArrowRight size={16} strokeWidth={1.5} />
+        </span>
+      </div>
+      <motion.span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-bg"
+        style={{ opacity: veil }}
+      />
+    </button>
+  )
+}
+
 function RingCard({
-  study,
   index,
-  total,
   step,
   geo,
   angle,
-  isFront,
-  onActivate,
+  front,
+  back,
 }: {
-  study: CaseStudy
   index: number
-  total: number
   step: number
   geo: Geometry
   angle: MotionValue<number>
-  isFront: boolean
-  onActivate: () => void
+  front: (veil: MotionValue<number>) => ReactNode
+  back: ReactNode
 }) {
   // Side cards sink into the page colour as they turn away.
   const veil = useTransform(angle, (a) => {
@@ -178,44 +227,42 @@ function RingCard({
 
   return (
     <div
-      className="absolute top-0 left-1/2 [transform-style:preserve-3d]"
+      className="absolute left-1/2 [transform-style:preserve-3d]"
       style={{
+        top: geo.lift,
         width: geo.width,
         height: geo.height,
         marginLeft: -geo.width / 2,
         transform: `rotateY(${index * step}deg) translateZ(${geo.radius}px)`,
       }}
     >
-      <CardFront
-        study={study}
-        index={index}
-        total={total}
-        isFront={isFront}
-        veil={veil}
-        onActivate={onActivate}
-      />
-      <CardBack index={index} total={total} title={study.title} />
+      {front(veil)}
+      {back}
     </div>
   )
 }
 
 export function ProjectsCarousel() {
-  const { t, locale } = useI18n()
+  const { t, locale, lp } = useI18n()
+  const navigate = useNavigate()
   const reduce = useReducedMotion()
   const studies = useMemo(() => buildCaseStudies(t, locale), [t, locale])
   const { openId, open, close } = useProjectParam()
   const total = studies.length
-  const step = 360 / total
+  // One slot per project plus the "your project here" card.
+  const slots = total + 1
+  const ctaIndex = total
+  const step = 360 / slots
 
   const sectionRef = useRef<HTMLElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
-  const geo = useRingGeometry(stageRef, total)
+  const geo = useRingGeometry(stageRef, slots)
 
   const angle = useMotionValue(0)
   const ringRotate = useTransform(angle, (a) => -a)
   const [front, setFront] = useState(0)
   useMotionValueEvent(angle, 'change', (a) => {
-    const i = ((Math.round(a / step) % total) + total) % total
+    const i = ((Math.round(a / step) % slots) + slots) % slots
     setFront((prev) => (prev === i ? prev : i))
   })
 
@@ -383,8 +430,9 @@ export function ProjectsCarousel() {
   }
 
   const activate = (index: number) => {
-    if (index === front) open(studies[index].id)
-    else bringToFront(index)
+    if (index !== front) bringToFront(index)
+    else if (index === ctaIndex) navigate(lp('/#contact'))
+    else open(studies[index].id)
   }
 
   const openIndex = studies.findIndex((s) => s.id === openId)
@@ -408,8 +456,14 @@ export function ProjectsCarousel() {
             <p className="text-base leading-relaxed text-muted sm:text-lg">{t.projects.intro}</p>
           </div>
           <p className="font-mono text-xs tracking-[0.14em] text-muted" aria-live="polite">
-            <span className="text-ink">{pad(front + 1)}</span> / {pad(total)}
-            <span className="sr-only">: {studies[front]?.title}</span>
+            {front === ctaIndex ? (
+              <span className="text-accent">{t.projects.ctaEyebrow}</span>
+            ) : (
+              <>
+                <span className="text-ink">{pad(front + 1)}</span> / {pad(total)}
+                <span className="sr-only">: {studies[front]?.title}</span>
+              </>
+            )}
           </p>
         </Reveal>
       </div>
@@ -419,8 +473,13 @@ export function ProjectsCarousel() {
         role="group"
         aria-roledescription="carousel"
         aria-label={t.projects.carouselLabel}
-        className="relative mx-auto w-full max-w-[1400px] cursor-grab touch-pan-y select-none active:cursor-grabbing"
-        style={{ height: geo.height + 40, perspective: `${Math.round(geo.radius * 4.2)}px` }}
+        className="relative w-full cursor-grab touch-pan-y select-none active:cursor-grabbing"
+        style={{
+          // Near side cards dip below the front one on the tilted ring.
+          height: geo.lift + geo.height + Math.round(geo.height * 0.22),
+          perspective: `${Math.round(geo.radius * 2.6)}px`,
+          perspectiveOrigin: `50% ${geo.lift}px`,
+        }}
         onPointerEnter={(e) => {
           if (e.pointerType === 'mouse') sim.current.hovered = true
         }}
@@ -439,21 +498,42 @@ export function ProjectsCarousel() {
       >
         <motion.div
           className="absolute inset-0 [transform-style:preserve-3d]"
-          style={{ z: -geo.radius, rotateY: ringRotate }}
+          style={{ z: -geo.radius, rotateX: TILT_DEG, rotateY: ringRotate }}
         >
           {studies.map((study, i) => (
             <RingCard
               key={study.id}
-              study={study}
               index={i}
-              total={total}
               step={step}
               geo={geo}
               angle={angle}
-              isFront={i === front}
-              onActivate={() => activate(i)}
+              front={(veil) => (
+                <CardFront
+                  study={study}
+                  index={i}
+                  total={total}
+                  isFront={i === front}
+                  veil={veil}
+                  onActivate={() => activate(i)}
+                />
+              )}
+              back={<CardBack label={`${pad(i + 1)} / ${pad(total)}`} title={study.title} />}
             />
           ))}
+          <RingCard
+            index={ctaIndex}
+            step={step}
+            geo={geo}
+            angle={angle}
+            front={(veil) => (
+              <CtaFront
+                isFront={front === ctaIndex}
+                veil={veil}
+                onActivate={() => activate(ctaIndex)}
+              />
+            )}
+            back={<CardBack label={t.projects.ctaEyebrow} title={t.projects.ctaTitle} />}
+          />
         </motion.div>
       </div>
 

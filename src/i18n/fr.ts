@@ -303,7 +303,7 @@ export const fr = {
     ctaTitle: 'Votre projet pourrait être ici',
     ctaBody: 'Une idée, un produit ou un défi en tête ? Construisons-le ensemble.',
     ctaButton: 'Parlons-en',
-    carouselHint: 'Utilisez la molette ou glissez pour faire tourner',
+    carouselHint: 'Faites glisser pour faire tourner',
     carouselLabel: 'Faire tourner les projets',
     previousProject: 'Projet précédent',
     nextProject: 'Projet suivant',

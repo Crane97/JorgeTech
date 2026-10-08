@@ -27,11 +27,11 @@ import { Reveal } from './Reveal'
 
 /** Idle spin: one full turn per minute. */
 const AUTO_DEG_PER_S = 6
-/** Wheel/drag momentum decay (per second) and the speed below which we snap. */
+/** Drag momentum decay (per second) and the speed below which we snap. */
 const FRICTION = 5
 const SNAP_BELOW_DEG_PER_S = 10
-/** After a touch/drag/wheel, wait this long before the idle spin resumes. */
-const RESUME_AFTER_MS = 2500
+/** After a drag, tap or arrow press the ring holds still this long, then spins again. */
+const RESUME_AFTER_MS = 5000
 /** Pointer travel that turns a press into a drag (and cancels the click). */
 const DRAG_THRESHOLD_PX = 6
 
@@ -270,7 +270,6 @@ export function ProjectsCarousel() {
   const sim = useRef({
     velocity: 0,
     snapTo: null as number | null,
-    hovered: false,
     dragging: false,
     lastInteraction: 0,
     inView: false,
@@ -329,7 +328,6 @@ export function ProjectsCarousel() {
           }
         } else if (
           autoAllowed.current &&
-          !s.hovered &&
           s.inView &&
           document.visibilityState === 'visible' &&
           now - s.lastInteraction > RESUME_AFTER_MS
@@ -354,23 +352,6 @@ export function ProjectsCarousel() {
     })
     io.observe(el)
     return () => io.disconnect()
-  }, [])
-
-  // Wheel over the ring spins it instead of scrolling the page.
-  useEffect(() => {
-    const el = stageRef.current
-    if (!el) return
-    const onWheel = (e: WheelEvent) => {
-      e.preventDefault()
-      const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1
-      const delta = (Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY) * unit
-      const s = sim.current
-      s.snapTo = null
-      s.lastInteraction = performance.now()
-      s.velocity = Math.max(-720, Math.min(720, s.velocity + delta * 0.9))
-    }
-    el.addEventListener('wheel', onWheel, { passive: false })
-    return () => el.removeEventListener('wheel', onWheel)
   }, [])
 
   // Drag / swipe: horizontal moves spin the ring; vertical swipes still scroll the page.
@@ -479,12 +460,6 @@ export function ProjectsCarousel() {
           height: geo.lift + geo.height + Math.round(geo.height * 0.22),
           perspective: `${Math.round(geo.radius * 2.6)}px`,
           perspectiveOrigin: `50% ${geo.lift}px`,
-        }}
-        onPointerEnter={(e) => {
-          if (e.pointerType === 'mouse') sim.current.hovered = true
-        }}
-        onPointerLeave={(e) => {
-          if (e.pointerType === 'mouse') sim.current.hovered = false
         }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}

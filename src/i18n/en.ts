@@ -303,7 +303,7 @@ export const en = {
     ctaTitle: 'Your project could be here',
     ctaBody: "Have an idea, a product or a challenge in mind? Let's build it together.",
     ctaButton: "Let's talk",
-    carouselHint: 'Scroll or swipe to spin',
+    carouselHint: 'Drag or swipe to spin',
     carouselLabel: 'Spin projects',
     previousProject: 'Previous project',
     nextProject: 'Next project',

@@ -303,7 +303,7 @@ export const es = {
     ctaTitle: 'Aquí podría ir tu proyecto',
     ctaBody: '¿Tienes una idea, un producto o un reto en mente? Construyámoslo juntos.',
     ctaButton: 'Hablemos',
-    carouselHint: 'Usa la rueda o desliza para girar',
+    carouselHint: 'Arrastra o desliza para girar',
     carouselLabel: 'Girar proyectos',
     previousProject: 'Proyecto anterior',
     nextProject: 'Proyecto siguiente',
@@ -330,6 +330,9 @@ export const es = {
     courses: 'Certificaciones y cursos',
     languages: 'Idiomas',
     additional: 'Adicional',
+    download: 'Descargar CV',
+    downloadNote: 'PDF · en inglés',
+    current: 'Actualidad',
     profile: 'Perfil',
   },
   about: {

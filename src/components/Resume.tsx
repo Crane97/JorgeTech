@@ -3,7 +3,8 @@ import type { ReactNode } from 'react'
 import { useI18n } from '../i18n/useI18n'
 import { Reveal } from './Reveal'
 
-const CV_PDF = '/cv/Jorge-Ruiz-de-la-Torre-CV.pdf'
+/** One PDF per site language: /cv/Jorge-Ruiz-de-la-Torre-CV-EN.pdf, -ES, -FR. */
+const cvPdf = (locale: string) => `/cv/Jorge-Ruiz-de-la-Torre-CV-${locale.toUpperCase()}.pdf`
 
 /** "Spanish (Native) · French (Advanced — Native)" → [{ name, level }]. */
 function parseLanguages(value: string) {
@@ -22,7 +23,7 @@ function Label({ children }: { children: ReactNode }) {
 }
 
 export function Resume() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const languages = parseLanguages(t.education.languages)
 
   return (
@@ -33,7 +34,7 @@ export function Resume() {
             {t.resume.title}
           </h2>
           <a
-            href={CV_PDF}
+            href={cvPdf(locale)}
             download
             className="btn-press inline-flex h-11 items-center gap-2.5 rounded-lg bg-ink px-5 text-sm font-medium text-surface hover:bg-ink/90"
           >

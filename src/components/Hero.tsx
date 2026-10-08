@@ -70,17 +70,11 @@ export function Hero() {
             transition={{ duration: 0.45, delay: 0.32, ease: EASE_OUT }}
           >
             <Link
-              to={lp('/#projects')}
+              to={lp('/#contact')}
               className="btn-apple inline-flex h-11 items-center gap-2 rounded-lg bg-ink px-5 text-sm font-medium text-surface"
             >
-              {t.hero.ctaWork}
-              <ArrowRight size={16} strokeWidth={1.5} />
-            </Link>
-            <Link
-              to={lp('/#contact')}
-              className="btn-apple btn-apple-outline inline-flex h-11 items-center rounded-lg border border-ink/20 bg-surface px-5 text-sm font-medium text-ink"
-            >
               {t.hero.ctaContact}
+              <ArrowRight size={16} strokeWidth={1.5} />
             </Link>
           </motion.div>
 

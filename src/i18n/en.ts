@@ -18,7 +18,6 @@ export const en = {
     location: 'Miami, Florida',
     headline: 'I build reliable software products end to end.',
     subtext: 'Full stack engineer focused on backends, platforms, and AI-enabled commercial tools.',
-    ctaWork: 'Selected work',
     ctaContact: 'Contact',
   },
   social: {
@@ -331,7 +330,7 @@ export const en = {
     languages: 'Languages',
     additional: 'Additional',
     download: 'Download CV',
-    downloadNote: 'PDF · English',
+    downloadNote: 'PDF',
     current: 'Current',
     profile: 'Profile',
   },

@@ -18,7 +18,6 @@ export const fr = {
     location: 'Miami, Floride',
     headline: 'Je construis des logiciels fiables de bout en bout.',
     subtext: 'Ingénieur full stack axé sur les backends, les plateformes et les outils commerciaux alimentés par l’IA.',
-    ctaWork: 'Projets',
     ctaContact: 'Contact',
   },
   social: {
@@ -331,7 +330,7 @@ export const fr = {
     languages: 'Langues',
     additional: 'Complément',
     download: 'Télécharger le CV',
-    downloadNote: 'PDF · en anglais',
+    downloadNote: 'PDF',
     current: 'Actuel',
     profile: 'Profil',
   },

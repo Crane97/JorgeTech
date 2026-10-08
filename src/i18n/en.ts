@@ -330,6 +330,9 @@ export const en = {
     courses: 'Certifications & training',
     languages: 'Languages',
     additional: 'Additional',
+    download: 'Download CV',
+    downloadNote: 'PDF · English',
+    current: 'Current',
     profile: 'Profile',
   },
   about: {

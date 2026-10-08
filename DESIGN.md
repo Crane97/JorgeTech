@@ -57,7 +57,7 @@ Theme lock: light only.
 - Experience timeline
 - Stack groups with mono chips
 - About editorial + boxing gallery
-- Resume open layout on the shared page background (titles + hairlines only)
+- Resume: header with "Download CV" (PDF, English, `public/cv/`); desktop two columns: sticky identity column (name, profile, languages as name/level rows, additional) and a vertical experience timeline (accent dot + "Current" badge on the present role, company · place · dates in mono); education and courses as hairline tiles in two columns. Stacked on phones
 - Contact form (Web3Forms, mailto fallback), no filled section panels
 
 ## Anti-patterns rejected

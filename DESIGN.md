@@ -51,7 +51,7 @@ Theme lock: light only.
 ## Components
 
 - Sticky product nav (single row)
-- Full-bleed portrait hero with readable scrim; a single "Contact" CTA (projects sit right below)
+- Hero: full name as display type; the drawing is full-bleed on phones/tablets and sits on the right 70% from 1024px up (desk line fades in on the left) so it never runs under the text; a single "Contact" CTA (projects sit right below)
 - Home `#projects` ("Personal projects"): 3D ring carousel, tilted -9° on `rotateX` so it is seen slightly from above, with wide gaps between cards. Six slots: every project plus a "Your project could be here" card (dashed accent frame, accent "Let's talk" button that goes to `#contact`). Cards sit on a ring that turns on `rotateY`; each card has a designed back (ink, JR mark, number), so cards visibly turn over as they go round. Idle spin 6°/s that never stops on hover; dragging with the mouse or swiping with a finger spins it with momentum and snaps to the nearest card, after which it holds still for 5 s and then resumes; the mouse wheel always scrolls the page; arrow buttons and ←/→ for keyboard. Clicking a side card brings it to the front; clicking the front card (the whole face, with a 48px button) opens the modal; a drag never opens. Spin pauses off-screen, in background tabs and while the modal is open. Reduced motion: no idle spin, steps without animation
 - Project modal (`?project=<id>` in the URL, shareable, Back closes): carousel + full case study (Problem / Solution / Architecture / Technologies / Results), previous/next project, focus trapped, page scroll locked. `/projects` redirects to the stack (`#id` opens that project)
 - Experience timeline

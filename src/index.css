@@ -84,6 +84,21 @@ body,
   height: min(56.25vw, 100%);
 }
 
+/*
+  Wide screens: the drawing sits on the right 70% so it never runs under the
+  name, positioning line or CTA; its left edge (the desk line) fades in.
+*/
+@media (min-width: 1024px) {
+  .hero-comic {
+    left: auto;
+    right: 0;
+    width: 70%;
+    height: min(calc(70vw * 9 / 16), 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%);
+    mask-image: linear-gradient(to right, transparent 0, #000 18%);
+  }
+}
+
 /* iOS draws a native play overlay on paused <video>, even with controls=false. */
 .hero-comic video {
   -webkit-appearance: none;

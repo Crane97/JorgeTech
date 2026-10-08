@@ -1,5 +1,5 @@
 export const es = {
-  brand: 'Jorge Ruiz de la Torre',
+  brand: 'Jorge Ruiz de la Torre Bertolín',
   fullName: 'Jorge Ruiz de la Torre Bertolín',
   nav: {
     projects: 'Proyectos',
@@ -44,20 +44,12 @@ export const es = {
         role: 'Desarrollador Full Stack',
         company: 'Solera Inc',
         place: 'Sevilla, España',
-        dates: 'Noviembre 2022 — Diciembre 2025',
+        dates: 'Septiembre 2022 — Diciembre 2025',
         points: [
+          'Incorporación a través de un bootcamp intensivo de desarrollo de software con tecnologías modernas (sep–nov 2022).',
           'Participación en un proyecto de Middleware de Integración de Datos (ETL), centrado en el desarrollo y mejora de su funcionalidad.',
           'Trabajo con C# .NET, React.js, testing unitario y cloud computing, con foco en optimización de procesos, escalabilidad y modernización de sistemas legacy.',
           'Colaboración con equipos transversales para entender requisitos de negocio y traducirlos en soluciones técnicas.',
-        ],
-      },
-      {
-        role: 'Bootcamp de Desarrollo de Software',
-        company: 'Solera Inc',
-        place: 'Sevilla, España',
-        dates: 'Septiembre 2022 — Noviembre 2022',
-        points: [
-          'Bootcamp intensivo de desarrollo de software con enfoque práctico en tecnologías modernas, como parte del proceso de onboarding.',
         ],
       },
       {

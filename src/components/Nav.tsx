@@ -52,8 +52,10 @@ export function Nav() {
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-10">
         <Link to={lp('/')} className="flex items-center gap-3">
           <img src={logoMark} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
-          <span className="text-sm font-medium tracking-tight text-ink sm:text-[15px]">
-            {t.brand}
+          <span className="text-sm font-medium tracking-tight whitespace-nowrap text-ink sm:text-[15px]">
+            {t.brand.slice(0, t.brand.lastIndexOf(' '))}
+            {/* Phones keep the bar on one line; the hero shows the full name. */}
+            <span className="hidden sm:inline">{t.brand.slice(t.brand.lastIndexOf(' '))}</span>
           </span>
         </Link>
 

@@ -1,5 +1,5 @@
 export const fr = {
-  brand: 'Jorge Ruiz de la Torre',
+  brand: 'Jorge Ruiz de la Torre Bertolín',
   fullName: 'Jorge Ruiz de la Torre Bertolín',
   nav: {
     projects: 'Projets',
@@ -18,7 +18,6 @@ export const fr = {
     location: 'Miami, Floride',
     headline: 'Je construis des logiciels fiables de bout en bout.',
     subtext: 'Ingénieur full stack axé sur les backends, les plateformes et les outils commerciaux alimentés par l’IA.',
-    ctaWork: 'Projets',
     ctaContact: 'Contact',
   },
   social: {
@@ -45,20 +44,12 @@ export const fr = {
         role: 'Développeur Full Stack',
         company: 'Solera Inc',
         place: 'Séville, Espagne',
-        dates: 'Novembre 2022 — Décembre 2025',
+        dates: 'Septembre 2022 — Décembre 2025',
         points: [
+          'Intégration via un bootcamp intensif et pratique de développement logiciel axé sur les technologies modernes (sept.–nov. 2022).',
           'Participation à un projet de Middleware d’Intégration de Données (ETL), axé sur le développement et l’amélioration de ses fonctionnalités.',
           'Travail avec C# .NET, React.js, tests unitaires et cloud computing, avec un focus sur l’optimisation des processus, la scalabilité et la modernisation de systèmes legacy.',
           'Collaboration avec des équipes transverses pour comprendre les besoins métier et les traduire en solutions techniques.',
-        ],
-      },
-      {
-        role: 'Bootcamp de Développement Logiciel',
-        company: 'Solera Inc',
-        place: 'Séville, Espagne',
-        dates: 'Septembre 2022 — Novembre 2022',
-        points: [
-          'Bootcamp intensif de développement logiciel avec un focus pratique sur les technologies modernes, dans le cadre du processus d’onboarding.',
         ],
       },
       {
@@ -331,7 +322,7 @@ export const fr = {
     languages: 'Langues',
     additional: 'Complément',
     download: 'Télécharger le CV',
-    downloadNote: 'PDF · en anglais',
+    downloadNote: 'PDF',
     current: 'Actuel',
     profile: 'Profil',
   },

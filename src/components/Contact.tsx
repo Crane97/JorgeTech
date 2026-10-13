@@ -1,7 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { useI18n } from '../i18n/useI18n'
-import { CONTACT_EMAIL, SOCIAL_LINKS } from '../lib/social'
+import { CONTACT_EMAIL, SOCIAL_LINKS, whatsappUrl } from '../lib/social'
 import { Reveal } from './Reveal'
+import { WhatsAppIcon } from './SocialIcons'
 
 /** Public Web3Forms access key (safe to ship to the browser). Without it the form falls back to mailto. */
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY
@@ -76,6 +77,16 @@ export function Contact() {
             <p className="mb-10 max-w-md text-base leading-relaxed text-muted sm:text-lg">
               {t.contact.intro}
             </p>
+
+            <a
+              href={whatsappUrl(t.contact.whatsappMessage)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-press mb-10 inline-flex h-12 items-center gap-3 rounded-lg border border-line bg-surface px-5 text-sm font-medium text-ink shadow-sm transition-[border-color] duration-200 hover:border-ink/25"
+            >
+              <WhatsAppIcon size={20} className="text-[#25D366]" />
+              {t.contact.whatsapp}
+            </a>
 
             <nav className="flex flex-col gap-4" aria-label="Social links">
               {SOCIAL_LINKS.map(({ key, href, display, Icon }) => (

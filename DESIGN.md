@@ -58,7 +58,7 @@ Theme lock: light only.
 - Stack groups with mono chips
 - About editorial + boxing gallery
 - Resume: header with "Download CV" serving the PDF in the active language (`public/cv/Jorge-Ruiz-de-la-Torre-CV-{EN,ES,FR}.pdf`); desktop two columns: sticky identity column (name, profile, languages as name/level rows, additional) and a vertical experience timeline (accent dot + "Current" badge on the present role, company · place · dates in mono); education and courses as hairline tiles in two columns. Stacked on phones
-- Contact form (Web3Forms, mailto fallback), no filled section panels
+- Contact: WhatsApp button (wa.me link to +34 682 658 759 with a formal prefilled message in the active language) above the social links; form (Web3Forms, mailto fallback), no filled section panels
 
 ## Anti-patterns rejected
 

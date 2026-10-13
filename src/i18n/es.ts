@@ -360,6 +360,8 @@ export const es = {
     formHintMail: 'Abre tu app de email con el mensaje listo para enviar.',
     subject: 'Consulta de proyecto',
     subjectFrom: 'Consulta de proyecto de',
+    whatsapp: 'Escríbeme por WhatsApp',
+    whatsappMessage: 'Hola Jorge, he visto tu portfolio y me gustaría ponerme en contacto contigo para hablar sobre una posible oportunidad profesional. ¿Podríamos concertar un momento para hablar?',
     addressLabel: 'Basado en',
   },
   seo: {
